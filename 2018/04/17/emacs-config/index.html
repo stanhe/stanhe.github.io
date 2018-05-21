@@ -1,0 +1,778 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="emacs," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="my-config">
+<meta name="keywords" content="emacs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Emacs config with org-mode">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/emacs-config/index.html">
+<meta property="og:site_name" content="乾谷">
+<meta property="og:description" content="my-config">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-21T12:30:05.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Emacs config with org-mode">
+<meta name="twitter:description" content="my-config">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Emacs config with org-mode | 乾谷 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">乾谷</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">与喧嚣低调同行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Emacs config with org-mode
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-04-17T21:43:25+08:00" content="2018-04-17">
+              2018-04-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!--![image]()-->
+<p><center> my-config </center><br><a id="more"></a></p>
+<p><center> ========================= init.el ============================ </center></p>
+<pre><code>; init file
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don&apos;t delete this line.  If you don&apos;t want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(setq package-enable-at-startup nil)
+(package-initialize)
+
+;;init with org-file
+(org-babel-load-file (expand-file-name &quot;stanhe.org&quot; user-emacs-directory))
+
+</code></pre><p><center> ========================= stanhe.org ============================ </center></p>
+<pre><code>* Emacs 配置
+
+** 初始化配置文件
+*** 源管理
+#+BEGIN_SRC emacs-lisp
+;init packages
+(when (&gt;= emacs-major-version 24)
+  (setq package-archives &apos;((&quot;gnu&quot; . &quot;http://elpa.emacs-china.org/gnu/&quot;)
+               (&quot;melpa&quot; . &quot;http://elpa.emacs-china.org/melpa/&quot;))))
+#+END_SRC
+*** 包安装
+#+BEGIN_SRC emacs-lisp
+(require &apos;cl)
+(defvar stanhe/packages &apos;(
+             company
+             hungry-delete
+             swiper
+             counsel
+             evil
+             general
+             smartparens
+             which-key
+             window-numbering
+             popwin
+             monokai-theme
+             ) &quot;Default packages&quot;)
+
+(setq package-selected-packages stanhe/packages)
+
+(defun stanhe/packages-install-p ()
+  (loop for pkg in stanhe/packages
+    when (not (package-installed-p pkg)) do (return nil)
+    finally (return t)))
+
+(unless (stanhe/packages-install-p)
+  (message &quot;%s&quot; &quot;Refreshing package database...&quot;)
+  (package-refresh-contents)
+  (dolist (pkg stanhe/packages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg))))
+#+END_SRC
+
+*** 加载相关包配置
+    按上面包添加顺序初始化
+#+BEGIN_SRC emacs-lisp
+(global-company-mode 1)
+(add-hook &apos;emacs-lisp-mode-hook &apos;show-paren-mode)
+(add-hook &apos;after-init-hook &apos;global-company-mode)
+
+(global-hungry-delete-mode)
+
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+
+(evil-mode 1)
+(general-evil-setup t)
+
+(smartparens-global-mode t)
+(sp-local-pair &apos;emacs-lisp-mode &quot;&apos;&quot; nil :actions nil)
+
+(which-key-mode 1)
+
+(window-numbering-mode 1)
+
+(require &apos;popwin)
+(popwin-mode 1)
+
+(load-theme &apos;monokai 1)       
+
+(abbrev-mode t)
+(define-abbrev-table &apos;global-abbrev-table &apos;(
+                        (&quot;6me&quot; &quot;stanhe&quot;)
+                        ))
+#+END_SRC
+** 我的配置文件
+*** 打开我的配置文件
+ #+BEGIN_SRC emacs-lisp
+(defun my-config-file ()
+  (interactive)
+  (find-file &quot;~/.emacs.d/stanhe.org&quot;))
+ #+END_SRC
+*** 绑定配置文件快捷键
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd &quot;&lt;f5&gt;&quot;) `my-config-file)
+#+END_SRC
+** 基础配置文件
+*** 界面及保存
+#+BEGIN_SRC emacs-lisp
+;; base config
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(global-linum-mode 1)
+(fset &apos;yes-or-no-p &apos;y-or-n-p)
+(setq inhibit-splash-screen -1)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+#+END_SRC
+*** dired
+    设置dired模式下的一些行为
+    1.默认递归删除和拷贝
+    2.拷贝使用当前可用window buffer目录
+    3.不新建dired buffer
+#+BEGIN_SRC emacs-lisp
+(setq dired-recursive-deletes &apos;always)
+(setq dired-recursive-copies &apos;always)
+(setq dired-dwim-target t)
+(put &apos;dired-find-alternate-file &apos;disabled nil)
+(with-eval-after-load &apos;dired (define-key dired-mode-map (kbd &quot;RET&quot;) &apos;dired-find-alternate-file))
+#+END_SRC
+** 绑定快捷键
+*** 插件快捷键
+#+BEGIN_SRC emacs-lisp
+;; key bindings 
+(global-set-key &quot;\C-s&quot; &apos;swiper)
+(global-set-key (kbd &quot;C-c C-r&quot;) &apos;ivy-resume)
+(global-set-key (kbd &quot;&lt;f6&gt;&quot;) &apos;ivy-resume)
+(global-set-key (kbd &quot;M-x&quot;) &apos;counsel-M-x)
+(global-set-key (kbd &quot;C-x C-f&quot;) &apos;counsel-find-file)
+(global-set-key (kbd &quot;&lt;f1&gt; f&quot;) &apos;counsel-describe-function)
+(global-set-key (kbd &quot;&lt;f1&gt; v&quot;) &apos;counsel-describe-variable)
+(global-set-key (kbd &quot;&lt;f1&gt; l&quot;) &apos;counsel-find-library)
+(global-set-key (kbd &quot;&lt;f2&gt; i&quot;) &apos;counsel-info-lookup-symbol)
+(global-set-key (kbd &quot;&lt;f2&gt; u&quot;) &apos;counsel-unicode-char)
+(global-set-key (kbd &quot;C-c g&quot;) &apos;counsel-git)
+(global-set-key (kbd &quot;C-c j&quot;) &apos;counsel-git-grep)
+(global-set-key (kbd &quot;C-x l&quot;) &apos;counsel-locate)
+(define-key minibuffer-local-map (kbd &quot;C-r&quot;) &apos;counsel-minibuffer-history)
+#+END_SRC
+*** 优化已有快捷键及自定义功能
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd &quot;C-h&quot;) &apos;delete-backward-char)
+#+END_SRC
+*** 自定义prefix快捷键
+#+BEGIN_SRC emacs-lisp
+(nvmap :prefix &quot;,&quot;
+       &quot;x1&quot; &apos;delete-other-windows
+       &quot;x0&quot; &apos;delete-window
+       &quot;x2&quot; &apos;split-window-below
+       &quot;x3&quot; &apos;split-window-right
+       &quot;xf&quot; &apos;counsel-find-file
+       &quot;xm&quot; &apos;counsel-M-x
+       &quot;xr&quot; &apos;counsel-recentf
+       &quot;xb&quot; &apos;ivy-switch-buffer
+       &quot;xd&quot; &apos;dired
+       &quot;xs&quot; &apos;save-buffer
+       &quot;xc&quot; &apos;save-buffers-kill-terminal
+       &quot;xk&quot; &apos;kill-buffer
+       &quot;xe&quot; &apos;eval-last-sexp
+       &quot;ff&quot; &apos;find-function
+       &quot;eb&quot; &apos;eval-buffer
+       &quot;cg&quot; &apos;counsel-git
+  )
+#+END_SRC
+** Custom Settings
+   保存custom-group 相关配置
+#+BEGIN_SRC emacs-lisp
+;;custom settings
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won&apos;t work right.
+ &apos;(company-idle-delay 0.3)
+ &apos;(company-minimum-prefix-length 2))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won&apos;t work right.
+ )
+ #+END_SRC
+
+</code></pre>
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/emacs/" rel="tag">#emacs</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/2018/" rel="next" title="2018随手一笔">
+                <i class="fa fa-chevron-left"></i> 2018随手一笔
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+  <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2018/04/17/emacs-config/"
+             data-title="Emacs config with org-mode" data-url="http://yoursite.com/2018/04/17/emacs-config/">
+        </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"stanhe"};
+  	(function() {
+  		var ds = document.createElement('script');
+  		ds.type = 'text/javascript';ds.async = true;
+  		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  		ds.charset = 'UTF-8';
+  		(document.getElementsByTagName('head')[0]
+  		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+  	})();
+  	</script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Stan" />
+          <p class="site-author-name" itemprop="name">Stan</p>
+          <p class="site-description motion-element" itemprop="description">灵魂躁动不安</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/stanhe" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/hshl4314" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
