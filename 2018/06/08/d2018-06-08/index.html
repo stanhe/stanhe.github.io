@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="随笔," />
+  <meta name="keywords" content="emacs-feature," />
 
 
 
@@ -80,18 +80,18 @@
 
 
 
-<meta name="description" content="Time files,hold on!">
-<meta name="keywords" content="随笔">
+<meta name="description" content="Instead of  “&amp;lt;s TAB”     &amp;lt;s and company too fast ,use abbrev isrc and ijava in org-mode for Literate programming.">
+<meta name="keywords" content="emacs-feature">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2018随手一笔">
-<meta property="og:url" content="http://yoursite.com/2018/03/28/2018/index.html">
+<meta property="og:title" content="emacs skeleton">
+<meta property="og:url" content="http://yoursite.com/2018/06/08/d2018-06-08/index.html">
 <meta property="og:site_name" content="乾谷">
-<meta property="og:description" content="Time files,hold on!">
+<meta property="og:description" content="Instead of  “&amp;lt;s TAB”     &amp;lt;s and company too fast ,use abbrev isrc and ijava in org-mode for Literate programming.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-21T12:25:31.496Z">
+<meta property="og:updated_time" content="2018-06-08T14:12:01.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2018随手一笔">
-<meta name="twitter:description" content="Time files,hold on!">
+<meta name="twitter:title" content="emacs skeleton">
+<meta name="twitter:description" content="Instead of  “&amp;lt;s TAB”     &amp;lt;s and company too fast ,use abbrev isrc and ijava in org-mode for Literate programming.">
 
 
 
@@ -109,7 +109,7 @@
   };
 </script>
 
-  <title> 2018随手一笔 | 乾谷 </title>
+  <title> emacs skeleton | 乾谷 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -229,7 +229,7 @@
             
             
               
-                2018随手一笔
+                emacs skeleton
               
             
           </h1>
@@ -241,8 +241,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-28T22:29:18+08:00" content="2018-03-28">
-              2018-03-28
+            <time itemprop="dateCreated" datetime="2018-06-08T21:49:21+08:00" content="2018-06-08">
+              2018-06-08
             </time>
           </span>
 
@@ -269,9 +269,8 @@
       
 
       
-        <p><center> Time files,hold on! </center><br><a id="more"></a></p>
-<p>老实说时间过的真他喵快，一转眼就飞过去了，平时笔记都是记在有道云上面，但是总感觉太多了找起来有点麻烦，所以还是翻出这个blog来做记录。</p>
-<p>入心处咫尺玄门</p>
+        <p><center> Instead of  “&lt;s TAB” </center><br>    &lt;s and company too fast ,use abbrev isrc and ijava in org-mode for Literate programming.<br><a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(setq-default abbrev-mode t)</span><br><span class="line"></span><br><span class="line">(define-skeleton 1src</span><br><span class="line">    &quot;Input src&quot;</span><br><span class="line">    &quot;&quot;</span><br><span class="line">    &quot;#+BEGIN_SRC emacs-lisp \n&quot;</span><br><span class="line">    _ &quot;\n&quot;</span><br><span class="line">    &quot;#+END_SRC&quot;)</span><br><span class="line">(define-skeleton 1java</span><br><span class="line">    &quot;Input src&quot;</span><br><span class="line">    &quot;&quot;</span><br><span class="line">    &quot;#+HEADER: :classname\n&quot;</span><br><span class="line">    &quot;#+BEGIN_SRC java \n&quot;</span><br><span class="line">    _ &quot;\n&quot;</span><br><span class="line">    &quot;#+END_SRC&quot;)</span><br><span class="line">(define-abbrev org-mode-abbrev-table &quot;isrc&quot; &quot;&quot; &apos;1src)</span><br><span class="line">(define-abbrev org-mode-abbrev-table &quot;ijava&quot; &quot;&quot; &apos;1java)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -292,7 +291,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随笔/" rel="tag">#随笔</a>
+            <a href="/tags/emacs-feature/" rel="tag">#emacs-feature</a>
           
         </div>
       
@@ -301,17 +300,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/13/travis/" rel="next" title="Android Travis CI">
-                <i class="fa fa-chevron-left"></i> Android Travis CI
+              <a href="/2018/04/17/emacs-config/" rel="next" title="Emacs config with org-mode">
+                <i class="fa fa-chevron-left"></i> Emacs config with org-mode
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/17/emacs-config/" rel="prev" title="Emacs config with org-mode">
-                Emacs config with org-mode <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -340,8 +335,8 @@
   </div>
 
   <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2018/03/28/2018/"
-             data-title="2018随手一笔" data-url="http://yoursite.com/2018/03/28/2018/">
+    <div class="ds-thread" data-thread-key="2018/06/08/d2018-06-08/"
+             data-title="emacs skeleton" data-url="http://yoursite.com/2018/06/08/d2018-06-08/">
         </div>
   <!-- 多说评论框 end -->
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
