@@ -88,7 +88,7 @@
 <meta property="og:site_name" content="乾谷">
 <meta property="og:description" content="my-config">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-21T12:30:05.093Z">
+<meta property="og:updated_time" content="2018-06-11T13:26:26.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Emacs config with org-mode">
 <meta name="twitter:description" content="my-config">
@@ -270,9 +270,10 @@
 
       
         <!--![image]()-->
-<p><center> my-config </center><br><a id="more"></a></p>
-<p><center> ========================= init.el ============================ </center></p>
+<center> my-config </center><br><a id="more"></a><br><br><center> ========================= init.el ============================ </center>
+
 <pre><code>; init file
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don&apos;t delete this line.  If you don&apos;t want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -283,10 +284,56 @@
 ;;init with org-file
 (org-babel-load-file (expand-file-name &quot;stanhe.org&quot; user-emacs-directory))
 
-</code></pre><p><center> ========================= stanhe.org ============================ </center></p>
-<pre><code>* Emacs 配置
 
-** 初始化配置文件
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won&apos;t work right.
+
+ &apos;(company-idle-delay 0.1)
+ &apos;(company-minimum-prefix-length 1)
+;; &apos;(org-agenda-files(quote (&quot;~/org/&quot;)))
+
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won&apos;t work right.
+ )
+
+</code></pre><center> ========================= stanhe.org ============================ </center>
+
+<pre><code>* Emacs 配置
+** 基础配置文件
+*** 界面及保存
+#+BEGIN_SRC emacs-lisp
+;; base config
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-linum-mode 1)
+(fset &apos;yes-or-no-p &apos;y-or-n-p)
+(setq inhibit-splash-screen -1)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq-default abbrev-mode t)
+(setq shell-command-switch &quot;-ic&quot;)
+#+END_SRC
+** 我的配置文件
+*** 打开我的配置文件
+ #+BEGIN_SRC emacs-lisp
+(defun my-config-file ()
+  (interactive)
+  (find-file &quot;~/.emacs.d/stanhe.org&quot;))
+ #+END_SRC
+*** 绑定配置文件快捷键
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd &quot;&lt;f5&gt;&quot;) `my-config-file)
+#+END_SRC
+** 包管理及配置文件
 *** 源管理
 #+BEGIN_SRC emacs-lisp
 ;init packages
@@ -294,22 +341,37 @@
   (setq package-archives &apos;((&quot;gnu&quot; . &quot;http://elpa.emacs-china.org/gnu/&quot;)
                (&quot;melpa&quot; . &quot;http://elpa.emacs-china.org/melpa/&quot;))))
 #+END_SRC
-*** 包安装
+*** 包管理
 #+BEGIN_SRC emacs-lisp
-(require &apos;cl)
 (defvar stanhe/packages &apos;(
+                     use-package
+                     neotree
+                     ace-window
              company
              hungry-delete
-             swiper
              counsel
              evil
+             js2-mode
              general
              smartparens
              which-key
              window-numbering
              popwin
              monokai-theme
-             ) &quot;Default packages&quot;)
+             projectile
+             counsel-projectile
+             magit
+             keychain-environment
+                     gh-md
+                     markdown-mode
+                     multi-term
+
+             ) &quot;My default packages&quot;)
+
+#+END_SRC
+*** 包安装
+#+BEGIN_SRC emacs-lisp
+(require &apos;cl)
 
 (setq package-selected-packages stanhe/packages)
 
@@ -329,133 +391,227 @@
 *** 加载相关包配置
     按上面包添加顺序初始化
 #+BEGIN_SRC emacs-lisp
-(global-company-mode 1)
-(add-hook &apos;emacs-lisp-mode-hook &apos;show-paren-mode)
-(add-hook &apos;after-init-hook &apos;global-company-mode)
+  (load-theme &apos;monokai 1)
+  (require &apos;use-package)
 
-(global-hungry-delete-mode)
+  (use-package company
+      :init
+      (global-company-mode 1)
+      :hook(after-init-hook . global-company-mode))
 
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+  (use-package hungry-delete
+      :config
+      (global-hungry-delete-mode))
 
-(evil-mode 1)
-(general-evil-setup t)
+  (use-package counsel
+      :init
+      (setq ivy-use-virtual-buffers t
+        ivy-count-format &quot;(%d/%d) &quot;
+        ivy-height 20
+        enable-recursive-minibuffers t)
+      :config 
+      (ivy-mode 1)
+      (ivy-set-actions
+      &apos;counsel-find-file
+      &apos;((&quot;m&quot; delete-file &quot;delete&quot;)))
+      (global-set-key &quot;\C-s&quot; &apos;swiper)
+      (global-set-key (kbd &quot;C-c C-r&quot;) &apos;ivy-resume)
+      (global-set-key (kbd &quot;&lt;f6&gt;&quot;) &apos;ivy-resume)
+      (global-set-key (kbd &quot;M-x&quot;) &apos;counsel-M-x)
+      (global-set-key (kbd &quot;C-x C-f&quot;) &apos;counsel-find-file)
+      (global-set-key (kbd &quot;&lt;f1&gt; f&quot;) &apos;counsel-describe-function)
+      (global-set-key (kbd &quot;&lt;f1&gt; v&quot;) &apos;counsel-describe-variable)
+      (global-set-key (kbd &quot;&lt;f1&gt; l&quot;) &apos;counsel-find-library)
+      (global-set-key (kbd &quot;&lt;f2&gt; i&quot;) &apos;counsel-info-lookup-symbol)
+      (global-set-key (kbd &quot;&lt;f2&gt; u&quot;) &apos;counsel-unicode-char)
+      (global-set-key (kbd &quot;C-c g&quot;) &apos;counsel-git)
+      (define-key minibuffer-local-map (kbd &quot;C-r&quot;) &apos;counsel-minibuffer-history))
 
-(smartparens-global-mode t)
-(sp-local-pair &apos;emacs-lisp-mode &quot;&apos;&quot; nil :actions nil)
+  (use-package org
+      :init
+      (setq org-src-fontify-natively t
+        org-log-done &apos;time
+        org-agenda-files &apos;(&quot;~/org/&quot;)
+        org-confirm-babel-evaluate nil))
 
-(which-key-mode 1)
+  (use-package smartparens-config
+      :config
+      (show-paren-mode)
+      (smartparens-global-mode)
+      (sp-local-pair &apos;(emacs-lisp-mode lisp-interaction-mode) &quot;&apos;&quot; nil :actions nil))
 
-(window-numbering-mode 1)
+  (use-package which-key
+      :config
+      (which-key-mode 1))
 
-(require &apos;popwin)
-(popwin-mode 1)
+  (use-package window-numbering
+      :config
+      (window-numbering-mode 1))
 
-(load-theme &apos;monokai 1)       
+  (use-package popwin
+      :config
+      (popwin-mode 1))
 
-(abbrev-mode t)
-(define-abbrev-table &apos;global-abbrev-table &apos;(
-                        (&quot;6me&quot; &quot;stanhe&quot;)
-                        ))
+  (use-package dired-x)
+  (use-package dired
+      :init
+      (setq dired-recursive-deletes &apos;always
+        dired-recursive-copies &apos;always
+        dired-dwim-target t)
+      :config
+      (put &apos;dired-find-alternate-file &apos;disabled nil)
+      (define-key dired-mode-map (kbd &quot;RET&quot;) &apos;dired-find-alternate-file)
+  )
+
+  (use-package neotree
+      :config
+      (setq neo-smart-open t)
+      :init
+      (add-hook &apos;neotree-mode-hook
+        (lambda ()
+          (define-key evil-normal-state-local-map (kbd &quot;TAB&quot;) &apos;neotree-enter)
+          (define-key evil-normal-state-local-map (kbd &quot;SPC&quot;) &apos;neotree-enter)
+          (define-key evil-normal-state-local-map (kbd &quot;q&quot;) &apos;neotree-hide)
+          (define-key evil-normal-state-local-map (kbd &quot;RET&quot;) &apos;neotree-enter))))
+
+  (use-package ace-window)
+
+  (use-package projectile
+      :init
+      (setq projectile-completion-system &apos;ivy)
+      :config
+      (projectile-mode)
+      (counsel-projectile-mode))
+
+  (use-package magit
+      :init
+      (keychain-refresh-environment)
+      (setq magit-completing-read-function &apos;ivy-completing-read))
+
+
+  (use-package markdown-mode
+    :mode ((&quot;README\\.md\\&apos;&quot; . gfm-mode)
+       (&quot;\\.md\\&apos;&quot; . markdown-mode)
+       (&quot;\\.markdown\\&apos;&quot; . markdown-mode))
+    :init (setq markdown-command &quot;multimarkdown&quot;))
+
+  (use-package gh-md)
+
+  (use-package js2-mode
+    :init
+    (setq auto-mode-alist
+    (append
+     &apos;((&quot;\\.js\\&apos;&quot; . js2-mode))
+     auto-mode-alist)))
+
+  (use-package multi-term
+    :init
+    (setq multi-term-program &quot;/bin/zsh&quot;))
 #+END_SRC
-** 我的配置文件
-*** 打开我的配置文件
- #+BEGIN_SRC emacs-lisp
-(defun my-config-file ()
-  (interactive)
-  (find-file &quot;~/.emacs.d/stanhe.org&quot;))
- #+END_SRC
-*** 绑定配置文件快捷键
+*** vm快捷键设置
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd &quot;&lt;f5&gt;&quot;) `my-config-file)
+
+(use-package evil
+    :init
+    (general-evil-setup t)
+    :config 
+    (evil-mode 1)
+    (nvmap :prefix &quot;,&quot;
+
+    &quot;p&quot; &apos;projectile-command-map
+    &quot;v&quot; &apos;evil-visual-block
+
+    &quot;x1&quot; &apos;delete-other-windows
+    &quot;xo&quot; &apos;other-window
+    &quot;x0&quot; &apos;delete-window
+    &quot;xq&quot; &apos;delete-window
+    &quot;x2&quot; &apos;split-window-below
+    &quot;x3&quot; &apos;split-window-right
+    &quot;xf&quot; &apos;counsel-find-file
+    &quot;xm&quot; &apos;counsel-M-x
+    &quot;xr&quot; &apos;counsel-recentf
+    &quot;xb&quot; &apos;ivy-switch-buffer
+    &quot;bb&quot; &apos;back-to-previous-buffer
+    &quot;xB&quot; &apos;list-buffers
+    &quot;xd&quot; &apos;dired
+    &quot;xj&quot; &apos;dired-jump
+    &quot;xs&quot; &apos;save-buffer
+    &quot;xc&quot; &apos;save-buffers-kill-terminal
+    &quot;xk&quot; &apos;kill-buffer
+    &quot;xe&quot; &apos;eval-last-sexp
+
+    &quot;aw&quot; &apos;ace-swap-window
+    &quot;eb&quot; &apos;eval-buffer
+    &quot;cg&quot; &apos;counsel-git
+    &quot;oa&quot; &apos;org-agenda
+
+    &quot;nf&quot; &apos;neotree-find
+    &quot;nt&quot; &apos;neotree-toggle
+    &quot;ns&quot; &apos;neotree-hidden-file-toggle
+    &quot;ng&quot; &apos;neotree-refresh
+    &quot;nd&quot; &apos;neotree-delete-node
+    &quot;nr&quot; &apos;neotree-rename-node
+    &quot;nc&quot; &apos;neotree-create-node
+    &quot;sv&quot; &apos;neotree-enter-vertical-split
+    &quot;sh&quot; &apos;neotree-enter-horizontal-split
+    &quot;gs&quot; &apos;magit-status
+
+    &quot;mm&quot; &apos;multi-term
+    &quot;mf&quot; &apos;multi-term-next
+    &quot;mb&quot; &apos;multi-term-prev
+    &quot;ms&quot; &apos;multi-term-dedicated-select
+    &quot;mt&quot; &apos;multi-term-dedicated-toggle
+    ))
+
 #+END_SRC
-** 基础配置文件
-*** 界面及保存
-#+BEGIN_SRC emacs-lisp
-;; base config
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(global-linum-mode 1)
-(fset &apos;yes-or-no-p &apos;y-or-n-p)
-(setq inhibit-splash-screen -1)
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-#+END_SRC
-*** dired
-    设置dired模式下的一些行为
-    1.默认递归删除和拷贝
-    2.拷贝使用当前可用window buffer目录
-    3.不新建dired buffer
-#+BEGIN_SRC emacs-lisp
-(setq dired-recursive-deletes &apos;always)
-(setq dired-recursive-copies &apos;always)
-(setq dired-dwim-target t)
-(put &apos;dired-find-alternate-file &apos;disabled nil)
-(with-eval-after-load &apos;dired (define-key dired-mode-map (kbd &quot;RET&quot;) &apos;dired-find-alternate-file))
-#+END_SRC
-** 绑定快捷键
-*** 插件快捷键
-#+BEGIN_SRC emacs-lisp
-;; key bindings 
-(global-set-key &quot;\C-s&quot; &apos;swiper)
-(global-set-key (kbd &quot;C-c C-r&quot;) &apos;ivy-resume)
-(global-set-key (kbd &quot;&lt;f6&gt;&quot;) &apos;ivy-resume)
-(global-set-key (kbd &quot;M-x&quot;) &apos;counsel-M-x)
-(global-set-key (kbd &quot;C-x C-f&quot;) &apos;counsel-find-file)
-(global-set-key (kbd &quot;&lt;f1&gt; f&quot;) &apos;counsel-describe-function)
-(global-set-key (kbd &quot;&lt;f1&gt; v&quot;) &apos;counsel-describe-variable)
-(global-set-key (kbd &quot;&lt;f1&gt; l&quot;) &apos;counsel-find-library)
-(global-set-key (kbd &quot;&lt;f2&gt; i&quot;) &apos;counsel-info-lookup-symbol)
-(global-set-key (kbd &quot;&lt;f2&gt; u&quot;) &apos;counsel-unicode-char)
-(global-set-key (kbd &quot;C-c g&quot;) &apos;counsel-git)
-(global-set-key (kbd &quot;C-c j&quot;) &apos;counsel-git-grep)
-(global-set-key (kbd &quot;C-x l&quot;) &apos;counsel-locate)
-(define-key minibuffer-local-map (kbd &quot;C-r&quot;) &apos;counsel-minibuffer-history)
-#+END_SRC
-*** 优化已有快捷键及自定义功能
+** 优化 And Function
+*** 优化快捷键
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd &quot;C-h&quot;) &apos;delete-backward-char)
+(global-set-key (kbd &quot;M-/&quot;) &apos;hippie-expand)
 #+END_SRC
-*** 自定义prefix快捷键
+*** Function
 #+BEGIN_SRC emacs-lisp
-(nvmap :prefix &quot;,&quot;
-       &quot;x1&quot; &apos;delete-other-windows
-       &quot;x0&quot; &apos;delete-window
-       &quot;x2&quot; &apos;split-window-below
-       &quot;x3&quot; &apos;split-window-right
-       &quot;xf&quot; &apos;counsel-find-file
-       &quot;xm&quot; &apos;counsel-M-x
-       &quot;xr&quot; &apos;counsel-recentf
-       &quot;xb&quot; &apos;ivy-switch-buffer
-       &quot;xd&quot; &apos;dired
-       &quot;xs&quot; &apos;save-buffer
-       &quot;xc&quot; &apos;save-buffers-kill-terminal
-       &quot;xk&quot; &apos;kill-buffer
-       &quot;xe&quot; &apos;eval-last-sexp
-       &quot;ff&quot; &apos;find-function
-       &quot;eb&quot; &apos;eval-buffer
-       &quot;cg&quot; &apos;counsel-git
-  )
+;; back buffer
+(defun back-to-previous-buffer ()
+       (interactive)
+       (switch-to-buffer nil))
+;; show paren in function
+(define-advice show-paren-function (:around (fn) fix-show-paren-function)
+&quot;Highlight enclosing parens.&quot;
+(cond ((looking-at-p &quot;\\s(&quot;) (funcall fn))
+    (t (save-excursion
+        (ignore-errors (backward-up-list))
+        (funcall fn)))))
+;; skeleton        
+(define-skeleton 1src
+    &quot;Input src&quot;
+    &quot;&quot;
+    &quot;#+BEGIN_SRC emacs-lisp \n&quot;
+    _ &quot;\n&quot;
+    &quot;#+END_SRC&quot;)
+(define-skeleton 1java
+    &quot;Input src&quot;
+    &quot;&quot;
+    &quot;#+HEADER: :classname\n&quot;
+    &quot;#+BEGIN_SRC java \n&quot;
+    _ &quot;\n&quot;
+    &quot;#+END_SRC&quot;)
+(define-abbrev org-mode-abbrev-table &quot;isrc&quot; &quot;&quot; &apos;1src)
+(define-abbrev org-mode-abbrev-table &quot;ijava&quot; &quot;&quot; &apos;1java)
+;; hippie expand
+(setq hippie-expand-try-function-list &apos;(try-expand-debbrev
+                    try-expand-debbrev-all-buffers
+                    try-expand-debbrev-from-kill
+                    try-complete-file-name-partially
+                    try-complete-file-name
+                    try-expand-all-abbrevs
+                    try-expand-list
+                    try-expand-line
+                    try-complete-lisp-symbol-partially
+                    try-complete-lisp-symbol))
 #+END_SRC
-** Custom Settings
-   保存custom-group 相关配置
-#+BEGIN_SRC emacs-lisp
-;;custom settings
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won&apos;t work right.
- &apos;(company-idle-delay 0.3)
- &apos;(company-minimum-prefix-length 2))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won&apos;t work right.
- )
- #+END_SRC
+
 
 </code></pre>
       
