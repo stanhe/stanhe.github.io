@@ -1,0 +1,356 @@
+---
+title: Emacs config with org-mode
+date: 2018-04-17 21:43:25
+tags: emacs
+---
+<!--![image]()-->
+<center> my-config </center>
+<!---more--->
+
+<center> ========================= init.el ============================ </center>
+
+```			 
+; init file
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(setq package-enable-at-startup nil)
+(package-initialize)
+
+;;init with org-file
+(org-babel-load-file (expand-file-name "stanhe.org" user-emacs-directory))
+
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ '(company-idle-delay 0.1)
+ '(company-minimum-prefix-length 1)
+;; '(org-agenda-files(quote ("~/org/")))
+
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+```			 
+<center> ========================= stanhe.org ============================ </center>
+
+```			 
+* Emacs 配置
+** 基础配置文件
+*** 界面及保存
+#+BEGIN_SRC emacs-lisp
+;; base config
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-linum-mode 1)
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq inhibit-splash-screen -1)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq-default abbrev-mode t)
+(setq shell-command-switch "-ic")
+#+END_SRC
+** 我的配置文件
+*** 打开我的配置文件
+ #+BEGIN_SRC emacs-lisp
+(defun my-config-file ()
+  (interactive)
+  (find-file "~/.emacs.d/stanhe.org"))
+ #+END_SRC
+*** 绑定配置文件快捷键
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f5>") `my-config-file)
+#+END_SRC
+** 包管理及配置文件
+*** 源管理
+#+BEGIN_SRC emacs-lisp
+;init packages
+(when (>= emacs-major-version 24)
+  (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+			   ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
+#+END_SRC
+*** 包管理
+#+BEGIN_SRC emacs-lisp
+(defvar stanhe/packages '(
+                     use-package
+                     neotree
+                     ace-window
+		     company
+		     hungry-delete
+		     counsel
+		     evil
+		     js2-mode
+		     general
+		     smartparens
+		     which-key
+		     window-numbering
+		     popwin
+		     monokai-theme
+		     projectile
+		     counsel-projectile
+		     magit
+		     keychain-environment
+                     gh-md
+                     markdown-mode
+                     multi-term
+
+		     ) "My default packages")
+
+#+END_SRC
+*** 包安装
+#+BEGIN_SRC emacs-lisp
+(require 'cl)
+
+(setq package-selected-packages stanhe/packages)
+
+(defun stanhe/packages-install-p ()
+  (loop for pkg in stanhe/packages
+	when (not (package-installed-p pkg)) do (return nil)
+	finally (return t)))
+
+(unless (stanhe/packages-install-p)
+  (message "%s" "Refreshing package database...")
+  (package-refresh-contents)
+  (dolist (pkg stanhe/packages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg))))
+#+END_SRC
+    
+*** 加载相关包配置
+    按上面包添加顺序初始化
+#+BEGIN_SRC emacs-lisp
+  (load-theme 'monokai 1)
+  (require 'use-package)
+
+  (use-package company
+      :init
+      (global-company-mode 1)
+      :hook(after-init-hook . global-company-mode))
+
+  (use-package hungry-delete
+      :config
+      (global-hungry-delete-mode))
+
+  (use-package counsel
+      :init
+      (setq ivy-use-virtual-buffers t
+	    ivy-count-format "(%d/%d) "
+	    ivy-height 20
+	    enable-recursive-minibuffers t)
+      :config 
+      (ivy-mode 1)
+      (ivy-set-actions
+	  'counsel-find-file
+	  '(("m" delete-file "delete")))
+      (global-set-key "\C-s" 'swiper)
+      (global-set-key (kbd "C-c C-r") 'ivy-resume)
+      (global-set-key (kbd "<f6>") 'ivy-resume)
+      (global-set-key (kbd "M-x") 'counsel-M-x)
+      (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+      (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+      (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+      (global-set-key (kbd "<f1> l") 'counsel-find-library)
+      (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+      (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+      (global-set-key (kbd "C-c g") 'counsel-git)
+      (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
+
+  (use-package org
+      :init
+      (setq org-src-fontify-natively t
+	    org-log-done 'time
+	    org-agenda-files '("~/org/")
+	    org-confirm-babel-evaluate nil))
+
+  (use-package smartparens-config
+      :config
+      (show-paren-mode)
+      (smartparens-global-mode)
+      (sp-local-pair '(emacs-lisp-mode lisp-interaction-mode) "'" nil :actions nil))
+
+  (use-package which-key
+      :config
+      (which-key-mode 1))
+
+  (use-package window-numbering
+      :config
+      (window-numbering-mode 1))
+
+  (use-package popwin
+      :config
+      (popwin-mode 1))
+
+  (use-package dired-x)
+  (use-package dired
+      :init
+      (setq dired-recursive-deletes 'always
+	    dired-recursive-copies 'always
+	    dired-dwim-target t)
+      :config
+      (put 'dired-find-alternate-file 'disabled nil)
+      (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+  )
+
+  (use-package neotree
+      :config
+      (setq neo-smart-open t)
+      :init
+      (add-hook 'neotree-mode-hook
+	    (lambda ()
+	      (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+	      (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+	      (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+	      (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter))))
+
+  (use-package ace-window)
+
+  (use-package projectile
+      :init
+      (setq projectile-completion-system 'ivy)
+      :config
+      (projectile-mode)
+      (counsel-projectile-mode))
+
+  (use-package magit
+      :init
+      (keychain-refresh-environment)
+      (setq magit-completing-read-function 'ivy-completing-read))
+
+
+  (use-package markdown-mode
+    :mode (("README\\.md\\'" . gfm-mode)
+	   ("\\.md\\'" . markdown-mode)
+	   ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+
+  (use-package gh-md)
+
+  (use-package js2-mode
+    :init
+    (setq auto-mode-alist
+	(append
+	 '(("\\.js\\'" . js2-mode))
+	 auto-mode-alist)))
+
+  (use-package multi-term
+    :init
+    (setq multi-term-program "/bin/zsh"))
+#+END_SRC
+*** vm快捷键设置
+#+BEGIN_SRC emacs-lisp
+
+(use-package evil
+    :init
+    (general-evil-setup t)
+    :config 
+    (evil-mode 1)
+    (nvmap :prefix ","
+
+	"p" 'projectile-command-map
+	"v" 'evil-visual-block
+
+	"x1" 'delete-other-windows
+	"xo" 'other-window
+	"x0" 'delete-window
+	"xq" 'delete-window
+	"x2" 'split-window-below
+	"x3" 'split-window-right
+	"xf" 'counsel-find-file
+	"xm" 'counsel-M-x
+	"xr" 'counsel-recentf
+	"xb" 'ivy-switch-buffer
+	"bb" 'back-to-previous-buffer
+	"xB" 'list-buffers
+	"xd" 'dired
+	"xj" 'dired-jump
+	"xs" 'save-buffer
+	"xc" 'save-buffers-kill-terminal
+	"xk" 'kill-buffer
+	"xe" 'eval-last-sexp
+
+	"aw" 'ace-swap-window
+	"eb" 'eval-buffer
+	"cg" 'counsel-git
+	"oa" 'org-agenda
+
+	"nf" 'neotree-find
+	"nt" 'neotree-toggle
+	"ns" 'neotree-hidden-file-toggle
+	"ng" 'neotree-refresh
+	"nd" 'neotree-delete-node
+	"nr" 'neotree-rename-node
+	"nc" 'neotree-create-node
+	"sv" 'neotree-enter-vertical-split
+	"sh" 'neotree-enter-horizontal-split
+	"gs" 'magit-status
+
+	"mm" 'multi-term
+	"mf" 'multi-term-next
+	"mb" 'multi-term-prev
+	"ms" 'multi-term-dedicated-select
+	"mt" 'multi-term-dedicated-toggle
+    ))
+
+#+END_SRC
+** 优化 And Function
+*** 优化快捷键
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-/") 'hippie-expand)
+#+END_SRC
+*** Function
+#+BEGIN_SRC emacs-lisp
+;; back buffer
+(defun back-to-previous-buffer ()
+       (interactive)
+       (switch-to-buffer nil))
+;; show paren in function
+(define-advice show-paren-function (:around (fn) fix-show-paren-function)
+"Highlight enclosing parens."
+(cond ((looking-at-p "\\s(") (funcall fn))
+	(t (save-excursion
+	    (ignore-errors (backward-up-list))
+	    (funcall fn)))))
+;; skeleton	    
+(define-skeleton 1src
+    "Input src"
+    ""
+    "#+BEGIN_SRC emacs-lisp \n"
+    _ "\n"
+    "#+END_SRC")
+(define-skeleton 1java
+    "Input src"
+    ""
+    "#+HEADER: :classname\n"
+    "#+BEGIN_SRC java \n"
+    _ "\n"
+    "#+END_SRC")
+(define-abbrev org-mode-abbrev-table "isrc" "" '1src)
+(define-abbrev org-mode-abbrev-table "ijava" "" '1java)
+;; hippie expand
+(setq hippie-expand-try-function-list '(try-expand-debbrev
+					try-expand-debbrev-all-buffers
+					try-expand-debbrev-from-kill
+					try-complete-file-name-partially
+					try-complete-file-name
+					try-expand-all-abbrevs
+					try-expand-list
+					try-expand-line
+					try-complete-lisp-symbol-partially
+					try-complete-lisp-symbol))
+#+END_SRC
+    
+    
+```			 
