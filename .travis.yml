@@ -19,7 +19,7 @@ after_scrit:
 
 branches:
     only:
-        - blog_source
+        - blog-source
 
 env:
     global:
