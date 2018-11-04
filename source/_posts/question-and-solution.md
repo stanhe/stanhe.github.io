@@ -88,3 +88,37 @@ x
 
 ```
 上面的方法解决了[<font color=#ffa500>2中多form解析的问题</font>](#question2)，但是参数固定了，只有:init :config，要添加就需要修改代码，为了方便，让该宏自动查找:init这种参数并返回一个plist
+
+### 4 keywords-to-plist
+
+解决上面 #3 的 keyways 解析问题
+
+```
+(defmacro keywords-to-plist (&rest args)
+  "handle the input keywords to progn plist."
+  `(let ((params ',args)
+	 current-arg
+	 return-plist
+	 tmp-value-arg
+	 (init-arg (list 'progn)))
+    (while params
+      (let ((value (pop params)))
+    	    (cond
+    	     ((symbolp value)
+	      (setq current-arg value)
+	      (setq tmp-value-arg init-arg))
+	    (t (setq tmp-value-arg (append tmp-value-arg (list value))))
+	    )
+	    (if (or (eq 0 (length params)) (and (symbolp (car params)) (not (eq nil (symbolp (car params))))))
+		(setq return-plist (plist-put return-plist current-arg tmp-value-arg)))
+	    ))
+    return-plist
+    ))
+
+
+(setq x (keywords-to-plist "hello" "world" :init (message "hi") (message "hello") :config "ok" (message "ok")))
+
+==> (nil ("hello" "world") :init (progn (message "hi") (message "hello")) :config (progn "ok" (message "ok"))) 
+```
+
+That's all.
