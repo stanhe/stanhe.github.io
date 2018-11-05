@@ -104,21 +104,22 @@ x
     (while params
       (let ((value (pop params)))
     	    (cond
-    	     ((symbolp value)
+    	     ((and (symbolp value) (not (eq nil value)))
 	      (setq current-arg value)
 	      (setq tmp-value-arg init-arg))
 	    (t (setq tmp-value-arg (append tmp-value-arg (list value))))
 	    )
-	    (if (or (eq 0 (length params)) (and (symbolp (car params)) (not (eq nil (symbolp (car params))))))
+	    (if (or (eq 0 (length params)) (and (symbolp (car params)) (not (eq nil (car params)))))
 		(setq return-plist (plist-put return-plist current-arg tmp-value-arg)))
 	    ))
     return-plist
     ))
 
 
-(setq x (keywords-to-plist "hello" "world" :init (message "hi") (message "hello") :config "ok" (message "ok")))
+(setq x (keywords-to-plist "hello" "world" :init (message "hi") (message "hello") :config "ok" (message "ok") :some (message "this is some") nil (message "new some")))
 
-==> (nil ("hello" "world") :init (progn (message "hi") (message "hello")) :config (progn "ok" (message "ok"))) 
+(eval (plist-get x :some))
+
 ```
 
 That's all.
