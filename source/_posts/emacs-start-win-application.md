@@ -31,7 +31,6 @@ date: 2018-11-06 15:59:59
 				chrome "d:/Eapps/chrome.exe.lnk"))
 
 ```
-但是要自己设置太麻烦，我要让emacs自己查找路径
 
 ### 2. 自动路径
 
@@ -43,20 +42,23 @@ date: 2018-11-06 15:59:59
 (setq custom-open-win-apps-dir "d:/Eapps")
 ```
 ```
-(defun open-win-application (&optional dir)
+(defun open-win-application ()
 	"start my application with w32, with prefix to input custom directory."
-	(interactive "P")
-	(setq debug-on-error t)
-	(require 'ivy)
-	(let ((desktop (concat (file-name-as-directory (concat (file-name-as-directory "c:/Users") user-login-name)) "Desktop")))
-	  (if (and current-prefix-arg (equal "" (setq dir (read-from-minibuffer "Input app directory(defalut is desktop): "))))
-	      (setq dir desktop))
-	  (let* ((custom-app-dir custom-open-win-apps-dir)(dir (if dir dir (if (file-exists-p custom-app-dir) custom-app-dir desktop)))
-		 (dir-lnks (if (file-exists-p dir) (directory-files dir t "[^ \\.]"))))
-	    (ivy-read "Open-application: "
-		      (mapcar 'file-name-base dir-lnks)
-		      :action '(1 ("o" (lambda (name)
-					 (w32-shell-execute "open" (concat (file-name-as-directory dir) name ))) "open")
-				  ("d" (lambda (name)
-					 (message "application path is: %s " (concat (file-name-as-directory dir) name))) "directory"))))))
+	(interactive)
+	;(setq debug-on-error t)
+	(let* ((desktop (concat "c:/Users/" user-login-name "/desktop/"))
+	       (custom-app-dir (if (and custom-open-win-apps-dir (file-exists-p custom-open-win-apps-dir) (not current-prefix-arg))
+				   custom-open-win-apps-dir
+				 desktop)))
+	  (ivy-read "Open application: "
+		    #'read-file-name-internal
+		    :matcher #'counsel--find-file-matcher
+		    :initial-input custom-app-dir
+		    :action (lambda (name) (w32-shell-execute "open"  name ))
+		    :preselect (counsel--preselect-file)
+		    :require-match 'confirm-after-completion
+		    :history 'file-name-history
+		    :caller 'open-file-application
+		    )))
+
 ```
