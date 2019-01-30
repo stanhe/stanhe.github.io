@@ -29,4 +29,4 @@ fi
 ```
 
 android studio open as android project,edit configurations run.
-![settings](http://pcnl48lkv.bkt.clouddn.com//asd2018-10-22.png)
+![settings](asd2018-10-22.png)

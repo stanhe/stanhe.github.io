@@ -3,7 +3,7 @@ title: emacs-start-win-application
 tags: emacs-lisp
 date: 2018-11-06 15:59:59
 ---
-![image](http://pcnl48lkv.bkt.clouddn.com//d2018-11-06/start.gif)
+![image](01.gif)
 
 <center> emacs open win application </center>
 
