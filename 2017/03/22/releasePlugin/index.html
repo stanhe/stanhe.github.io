@@ -1,0 +1,593 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gradle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="写好了gradle插件,如果只能本地使用就太low了,怎么滴也要放到远程仓库,下次项目直接引用.然而上传过程中也是踩坑…这里记录一下过程.">
+<meta name="keywords" content="gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="publish plugin">
+<meta property="og:url" content="http://yoursite.com/2017/03/22/releasePlugin/index.html">
+<meta property="og:site_name" content="乾谷">
+<meta property="og:description" content="写好了gradle插件,如果只能本地使用就太low了,怎么滴也要放到远程仓库,下次项目直接引用.然而上传过程中也是踩坑…这里记录一下过程.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oanvj2lsv.bkt.clouddn.com/jitpack/jfrog.png">
+<meta property="og:image" content="http://oanvj2lsv.bkt.clouddn.com/jitpack/jitpack01.png">
+<meta property="og:image" content="http://oanvj2lsv.bkt.clouddn.com/jitpack/jitpack02.png">
+<meta property="og:updated_time" content="2019-12-12T11:45:42.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="publish plugin">
+<meta name="twitter:description" content="写好了gradle插件,如果只能本地使用就太low了,怎么滴也要放到远程仓库,下次项目直接引用.然而上传过程中也是踩坑…这里记录一下过程.">
+<meta name="twitter:image" content="http://oanvj2lsv.bkt.clouddn.com/jitpack/jfrog.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> publish plugin | 乾谷 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">乾谷</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">与喧嚣低调同行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                publish plugin
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-22T11:25:01+00:00" content="2017-03-22">
+              2017-03-22
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://oanvj2lsv.bkt.clouddn.com/jitpack/jfrog.png" alt="Gradle"><br>写好了gradle插件,如果只能本地使用就太low了,怎么滴也要放到远程仓库,下次项目直接引用.然而上传过程中也是踩坑…<br>这里记录一下过程.<br><a id="more"></a></p>
+<h3 id="github-直接发布到-jitpack"><a href="#github-直接发布到-jitpack" class="headerlink" title="github 直接发布到 jitpack"></a>github 直接发布到 jitpack</h3><h4 id="release"><a href="#release" class="headerlink" title="release"></a>release</h4><p>github项目下 —&gt; releases —&gt; Draft a new release.填写发布信息.<br><img src="http://oanvj2lsv.bkt.clouddn.com/jitpack/jitpack01.png" alt=""></p>
+<h4 id="发布到jitpack仓库"><a href="#发布到jitpack仓库" class="headerlink" title="发布到jitpack仓库"></a>发布到jitpack仓库</h4><p>git账号登陆,然后 输入 user/repository Look up,选择发布版本并 Get it.这时候前面有个Log,点进去 最下面往上看,BUILD SUCCESSFUL 表示成功提取并发布 Files:下面是发布的包中的文件<br><img src="http://oanvj2lsv.bkt.clouddn.com/jitpack/jitpack02.png" alt=""></p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>从上面发布图最后来看使用就和我们平时使用compile添加依赖一样.实际上至此一个正常的库就可以应用上面的方法来使用了.<br>然而,这里发布的是一个gradle插件,按如上方法添加依赖并不能让gradle认识它.所以添加方法不同<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;com.android.application&apos;</span><br><span class="line">apply plugin: &apos;addversioncode&apos;</span><br><span class="line"></span><br><span class="line">buildscript&#123;</span><br><span class="line">    repositories&#123;</span><br><span class="line">        jcenter()</span><br><span class="line">        maven &#123; url &apos;https://jitpack.io&apos; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies&#123;</span><br><span class="line">        classpath &apos;com.github.stanhe:AutoAddVersionCode:1.0.2&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">versionFile&#123;</span><br><span class="line">    desFile = &apos;manifest&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如上使用了 classpath添加依赖.这特喵就可以了.为啥,引用stackoverflow 的<a href="http://stackoverflow.com/questions/34286407/gradle-what-is-the-difference-between-classpath-and-compile-dependencies" target="_blank" rel="noopener">解答</a>就是:<br>The compile configuration is created by the Java plugin. The classpath configuration is commonly seen in the buildSrc {} block where one needs to declare dependencies for the build.gradle, itself (for plugins, perhaps).</p>
+<h3 id="发布到jcenter"><a href="#发布到jcenter" class="headerlink" title="发布到jcenter"></a>发布到jcenter</h3><h4 id="添加发布的插件"><a href="#添加发布的插件" class="headerlink" title="添加发布的插件"></a>添加发布的插件</h4><p>项目根目录的build.gradle下添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Top-level build file where you can add configuration options common to all sub-projects/modules.</span><br><span class="line"></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath &apos;com.android.tools.build:gradle:2.1.3&apos;</span><br><span class="line"></span><br><span class="line">        classpath &apos;com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0&apos;</span><br><span class="line">        classpath &apos;com.github.dcendents:android-maven-plugin:1.2&apos;</span><br><span class="line">        // NOTE: Do not place your application dependencies here; they belong</span><br><span class="line">        // in the individual module build.gradle files</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="待发布的build-gradle下添加"><a href="#待发布的build-gradle下添加" class="headerlink" title="待发布的build.gradle下添加"></a>待发布的build.gradle下添加</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply from: &apos;../bintray.gradle&apos;</span><br></pre></td></tr></table></figure>
+<p>没错,只是把本来该写在这里的文件提出来单独写而已,毕竟发布的逻辑没必要写到插件本身里面</p>
+<h4 id="bintray-gradle"><a href="#bintray-gradle" class="headerlink" title="bintray.gradle"></a>bintray.gradle</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">// 应用插件</span><br><span class="line">apply plugin: &apos;com.jfrog.bintray&apos;</span><br><span class="line">apply plugin: &apos;maven-publish&apos;</span><br><span class="line"></span><br><span class="line">def baseUrl = &apos;https://github.com/stanhe&apos;</span><br><span class="line">def siteUrl = baseUrl</span><br><span class="line">def gitUrl = &quot;$&#123;baseUrl&#125;/AutoAddVersionCode&quot;</span><br><span class="line">def issueUrl = &quot;$&#123;baseUrl&#125;/AutoAddVersionCode/issues&quot;</span><br><span class="line"></span><br><span class="line">install &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenInstaller &#123;</span><br><span class="line">            // This generates POM.xml with proper paramters</span><br><span class="line">            pom.project &#123;</span><br><span class="line"></span><br><span class="line">                //添加项目描述</span><br><span class="line">                name &apos;Gradle Plugin for Android&apos;</span><br><span class="line">                url siteUrl</span><br><span class="line"></span><br><span class="line">                //设置开源证书信息</span><br><span class="line">                licenses &#123;</span><br><span class="line">                    license &#123;</span><br><span class="line">                        name &apos;The Apache Software License, Version 2.0&apos;</span><br><span class="line">                        url &apos;http://www.apache.org/licenses/LICENSE-2.0.txt&apos;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                //添加开发者信息</span><br><span class="line">                developers &#123;</span><br><span class="line">                    developer &#123;</span><br><span class="line">                        name &apos;stanhe&apos;</span><br><span class="line">                        email &apos;hshl4314@gmail.com&apos;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                scm &#123;</span><br><span class="line">                    connection gitUrl</span><br><span class="line">                    developerConnection baseUrl</span><br><span class="line">                    url siteUrl</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task sourcesJar(type: Jar) &#123;</span><br><span class="line">    from &apos;src/main/groovy&apos;</span><br><span class="line">    exclude &apos;META-INF&apos;</span><br><span class="line">    classifier = &apos;sources&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">groovydoc &#123;</span><br><span class="line">    includePrivate = true</span><br><span class="line">    source = &apos;src/main/groovy&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task groovydocJar(type: Jar, dependsOn: groovydoc) &#123;</span><br><span class="line">    classifier = &apos;javadoc&apos;</span><br><span class="line">    from groovydoc.destinationDir</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">artifacts &#123;</span><br><span class="line">    archives groovydocJar</span><br><span class="line">    archives sourcesJar</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Properties properties = new Properties()</span><br><span class="line">properties.load(project.rootProject.file(&apos;local.properties&apos;).newDataInputStream())</span><br><span class="line"></span><br><span class="line">//配置上传Bintray相关信息</span><br><span class="line">bintray &#123;</span><br><span class="line">    user = properties.getProperty(&quot;bintray.user&quot;)</span><br><span class="line">    key = properties.getProperty(&quot;bintray.apikey&quot;)</span><br><span class="line"></span><br><span class="line">    configurations = [&apos;archives&apos;]</span><br><span class="line">    pkg &#123;</span><br><span class="line">        repo = &apos;maven&apos; // 上传到中央仓库的名称</span><br><span class="line">        name = &apos;AutoAddVerionCode&apos; // 上传到jcenter 的项目名称</span><br><span class="line">        desc = &apos;Auto add gradle versionCode when release&apos; // 项目描述</span><br><span class="line">        websiteUrl = siteUrl</span><br><span class="line">        issueTrackerUrl = issueUrl</span><br><span class="line">        vcsUrl = gitUrl</span><br><span class="line">        labels = [&apos;gradle&apos;, &apos;plugin&apos;]</span><br><span class="line">        licenses = [&apos;Apache-2.0&apos;]</span><br><span class="line">        publish = true</span><br><span class="line">        publicDownloadNumbers = true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>user和key被单独提出来放到local.properties下.<br>refresh gradle右边会出现一个 publishing文件 点击下面的 bintrayUpload上传到jcenter并add to Jcenter.</p>
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><p><a href="http://blog.csdn.net/wwj_748/article/details/52077118" target="_blank" rel="noopener"> Gradle插件开发</a><br><a href="http://blog.csdn.net/lisdye2/article/details/52292896" target="_blank" rel="noopener">上传Library到JCenter</a><br><a href="https://docs.gradle.org/current/userguide/custom_plugins.html#sec:packaging_a_plugin" target="_blank" rel="noopener">Writing Custom Plugins</a><br><a href="https://docs.gradle.org/current/userguide/publishing_maven.html" target="_blank" rel="noopener">maven_publishing</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gradle/" rel="tag">#gradle</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/19/gradle_plugin/" rel="next" title="Create your gradle plugin">
+                <i class="fa fa-chevron-left"></i> Create your gradle plugin
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/09/bunny_game0/" rel="prev" title="Bunny Game I">
+                Bunny Game I <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+  <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2017/03/22/releasePlugin/"
+             data-title="publish plugin" data-url="http://yoursite.com/2017/03/22/releasePlugin/">
+        </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"stanhe"};
+  	(function() {
+  		var ds = document.createElement('script');
+  		ds.type = 'text/javascript';ds.async = true;
+  		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  		ds.charset = 'UTF-8';
+  		(document.getElementsByTagName('head')[0]
+  		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+  	})();
+  	</script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Stan" />
+          <p class="site-author-name" itemprop="name">Stan</p>
+          <p class="site-description motion-element" itemprop="description">灵魂躁动不安</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/stanhe" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#github-直接发布到-jitpack"><span class="nav-number">1.</span> <span class="nav-text">github 直接发布到 jitpack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#release"><span class="nav-number">1.1.</span> <span class="nav-text">release</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布到jitpack仓库"><span class="nav-number">1.2.</span> <span class="nav-text">发布到jitpack仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用"><span class="nav-number">1.3.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布到jcenter"><span class="nav-number">2.</span> <span class="nav-text">发布到jcenter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加发布的插件"><span class="nav-number">2.1.</span> <span class="nav-text">添加发布的插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#待发布的build-gradle下添加"><span class="nav-number">2.2.</span> <span class="nav-text">待发布的build.gradle下添加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bintray-gradle"><span class="nav-number">2.3.</span> <span class="nav-text">bintray.gradle</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
