@@ -5,6 +5,7 @@ date: 2018-11-08 10:21:00
 ---
 ![image](01.gif)
 <center> open application in dired mode with "C-o" </center>
+<!---more--->
 ```
 (define-key dired-mode-map (kbd "C-o") (lambda ()
 					 (interactive)

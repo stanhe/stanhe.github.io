@@ -7,6 +7,8 @@ date: 2018-11-06 15:59:59
 
 <center> emacs open win application </center>
 
+<!---more--->
+
 ### 1. emacs 启动win应用
 
 既然可以用emacs启动explore,那应该也可以启动应用，所以我找到了w32-shell-execute 写了个方法
