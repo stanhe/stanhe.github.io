@@ -1,0 +1,608 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="macos emcs gtd," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Macos下的GTD使用总结">
+<meta name="keywords" content="macos emcs gtd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Macos emacs gtd">
+<meta property="og:url" content="http://yoursite.com/2022/04/29/macos-emacs-gtd/index.html">
+<meta property="og:site_name" content="乾谷">
+<meta property="og:description" content="Macos下的GTD使用总结">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2022/04/29/macos-emacs-gtd/emacs20220429.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/29/macos-emacs-gtd/home20220429.png">
+<meta property="og:image" content="http://yoursite.com/2022/04/29/macos-emacs-gtd/cmd20220429.png">
+<meta property="og:updated_time" content="2022-05-11T14:12:17.684Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Macos emacs gtd">
+<meta name="twitter:description" content="Macos下的GTD使用总结">
+<meta name="twitter:image" content="http://yoursite.com/2022/04/29/macos-emacs-gtd/emacs20220429.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Macos emacs gtd | 乾谷 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">乾谷</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">与喧嚣低调同行</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Macos emacs gtd
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2022-04-29T16:23:40+08:00" content="2022-04-29">
+              2022-04-29
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><center> <img src="/2022/04/29/macos-emacs-gtd/emacs20220429.png" alt="image"> </center></p>
+<p><center> Macos下的GTD使用总结 </center><br><a id="more"></a></p>
+<h2 id="Emacs-org-mode"><a href="#Emacs-org-mode" class="headerlink" title="Emacs org-mode"></a>Emacs org-mode</h2><p>相较于markdown，org-mode对于程序员更加友好，不仅能提供markdown的所有功能，同时增加了文学编程功能，可以直接运行代码块，嵌入可执行链接等，emacs也是我的多端管理、脚本集成工具,有兴趣的可以参考: <a href="https://github.com/stanhe/emacs.d" target="_blank" rel="noopener"><font color="#0099ff">我的配置</font></a>、<a href="https://github.com/lujun9972/emacs-document/blob/master/org-mode/%E6%96%87%E5%AD%A6%E7%BC%96%E7%A8%8B%E7%AE%80%E4%BB%8B.org" target="_blank" rel="noopener"><font color="#0099ff">文学编程</font></a>、<a href="https://www.cnblogs.com/sunsiyuan/p/7356284.html" target="_blank" rel="noopener"><font color="#0099ff">org-mode简明教程</font></a></p>
+<h2 id="GTD-amp-CMD"><a href="#GTD-amp-CMD" class="headerlink" title="GTD&amp;CMD"></a>GTD&amp;CMD</h2><p>经过几年的使用，我的gtd从之前的单文件年度管理方案转到现在的月度方案，年度方案会随着使用内容增多分摊关注项，导致集中度下降，现在使用月度管理方案，把工作内容细分到周，每个月末对这个月的工作内容进行复盘和归档</p>
+<h3 id="gtd文件内容"><a href="#gtd文件内容" class="headerlink" title="gtd文件内容"></a>gtd文件内容</h3><ul>
+<li>Emacs功能导航: 方便编辑配置文件和跳转到CMD文件.</li>
+<li>工作导航: 包含常用的链接跳转</li>
+<li>项目导航: 包含常用的本地项目目录快速打开</li>
+<li>项目: 当前在进行的项目</li>
+<li>备忘: 记录一些不紧急待处理事件</li>
+<li>月度内容: 周工作内容分布<br><img src="/2022/04/29/macos-emacs-gtd/home20220429.png" alt="image"></li>
+</ul>
+<h3 id="cmd指令集"><a href="#cmd指令集" class="headerlink" title="cmd指令集"></a>cmd指令集</h3><ul>
+<li>git: 常用git指令</li>
+<li>个人&amp;应用: 直接打开本级的应用    </li>
+<li>adb: 常用adb相关操作</li>
+<li>flutter: flutter打包快捷拷贝操作<br><img src="/2022/04/29/macos-emacs-gtd/cmd20220429.png" alt="image"></li>
+</ul>
+<h2 id="协调操作"><a href="#协调操作" class="headerlink" title="协调操作"></a>协调操作</h2><p>从上面的gtd和cmd文件可以看到都在头部添加了快速跳转点击指令，用于快速切换两个文件，gtd文件记录工作项，cmd快速处理需要执行的繁复任务，保存重复、高频使用的指令 </p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/macos-emcs-gtd/" rel="tag">#macos emcs gtd</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/03/08/product-batch-pick-strategy/" rel="next" title="Product Batch Pick Strategy">
+                <i class="fa fa-chevron-left"></i> Product Batch Pick Strategy
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/05/11/DateTimeRange/" rel="prev" title="Flutter DateTimeRange">
+                Flutter DateTimeRange <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+  <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2022/04/29/macos-emacs-gtd/"
+             data-title="Macos emacs gtd" data-url="http://yoursite.com/2022/04/29/macos-emacs-gtd/">
+        </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"stanhe"};
+  	(function() {
+  		var ds = document.createElement('script');
+  		ds.type = 'text/javascript';ds.async = true;
+  		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  		ds.charset = 'UTF-8';
+  		(document.getElementsByTagName('head')[0]
+  		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+  	})();
+  	</script>
+  <!-- 多说公共JS代码 end -->
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Stan" />
+          <p class="site-author-name" itemprop="name">Stan</p>
+          <p class="site-description motion-element" itemprop="description">灵魂躁动不安</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/">
+              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/">
+                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/stanhe" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs-org-mode"><span class="nav-number">1.</span> <span class="nav-text">Emacs org-mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GTD-amp-CMD"><span class="nav-number">2.</span> <span class="nav-text">GTD&amp;CMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gtd文件内容"><span class="nav-number">2.1.</span> <span class="nav-text">gtd文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmd指令集"><span class="nav-number">2.2.</span> <span class="nav-text">cmd指令集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协调操作"><span class="nav-number">3.</span> <span class="nav-text">协调操作</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stan</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
