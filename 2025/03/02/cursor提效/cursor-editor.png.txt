@@ -1,0 +1,5 @@
+请在此处添加Cursor编辑器的截图，并将文件重命名为cursor-editor.png
+
+您可以从Cursor官网(https://cursor.sh)获取截图，或者使用自己的Cursor编辑器截图。
+
+添加图片后，请删除此文本文件。 
