@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="emacs open win application">
+<meta property="og:type" content="article">
+<meta property="og:title" content="emacs-start-win-application">
+<meta property="og:url" content="http://example.com/2018/11/06/emacs-start-win-application/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="emacs open win application">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/11/06/emacs-start-win-application/01.gif">
+<meta property="article:published_time" content="2018-11-06T07:59:59.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.965Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="emacs-lisp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2018/11/06/emacs-start-win-application/01.gif">
+
+
+<link rel="canonical" href="http://example.com/2018/11/06/emacs-start-win-application/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2018/11/06/emacs-start-win-application/","path":"2018/11/06/emacs-start-win-application/","title":"emacs-start-win-application"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>emacs-start-win-application | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-emacs-%E5%90%AF%E5%8A%A8win%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1. emacs 启动win应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%87%AA%E5%8A%A8%E8%B7%AF%E5%BE%84"><span class="nav-number">2.</span> <span class="nav-text">2. 自动路径</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/06/emacs-start-win-application/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="emacs-start-win-application | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          emacs-start-win-application
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-06 15:59:59" itemprop="dateCreated datePublished" datetime="2018-11-06T15:59:59+08:00">2018-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/2018/11/06/emacs-start-win-application/01.gif" alt="image"></p>
+<center> emacs open win application </center>
+
+<span id="more"></span>
+
+<h3 id="1-emacs-启动win应用"><a href="#1-emacs-启动win应用" class="headerlink" title="1. emacs 启动win应用"></a>1. emacs 启动win应用</h3><p>既然可以用emacs启动explore,那应该也可以启动应用，所以我找到了w32-shell-execute 写了个方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(defun open-win-application ()</span><br><span class="line">	&quot;start my application with w32.&quot;</span><br><span class="line">	(interactive)</span><br><span class="line">	(require &#x27;ivy)</span><br><span class="line">	(let ((app-list (loop for (k v) on my-run-application-plist by (function cddr) collect k)))</span><br><span class="line">	  (ivy-read &quot;Open-application: &quot;</span><br><span class="line">		    app-list</span><br><span class="line">		    :action &#x27;(1 (&quot;o&quot; (lambda (name)</span><br><span class="line">				       (w32-shell-execute &quot;open&quot; (plist-get my-run-application-plist (intern name)))) &quot;open&quot;)</span><br><span class="line">				(&quot;d&quot; (lambda (name)</span><br><span class="line">				       (message &quot;application path is: %s &quot; (plist-get my-run-application-plist (intern name)))) &quot;directory&quot;)))))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后把需要启动的快捷方式传入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;;put the shortcut to `d:/Eapps/&#x27;</span><br><span class="line">(setq my-run-application-plist &#x27;(git-bash &quot;d:/Eapps/git-bash.exe.lnk&quot;</span><br><span class="line">				chrome &quot;d:/Eapps/chrome.exe.lnk&quot;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-自动路径"><a href="#2-自动路径" class="headerlink" title="2. 自动路径"></a>2. 自动路径</h3><ul>
+<li>有prefix，可以自己输入路径，默认桌面</li>
+<li>没有prefix，查看是否通过 custom-open-win-apps-dir 指定路径，如果没有，打开桌面</li>
+<li>如果d:Eapps中的快捷方式如果有 git-bash，把属性中的起始位置去掉，可以打开当前文件所在的位置</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(setq custom-open-win-apps-dir &quot;d:/Eapps&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(defun open-win-application ()</span><br><span class="line">	&quot;start my application with w32, with prefix to input custom directory.&quot;</span><br><span class="line">	(interactive)</span><br><span class="line">	;(setq debug-on-error t)</span><br><span class="line">	(let* ((desktop (concat &quot;c:/Users/&quot; user-login-name &quot;/desktop/&quot;))</span><br><span class="line">	       (custom-app-dir (if (and custom-open-win-apps-dir (file-exists-p custom-open-win-apps-dir) (not current-prefix-arg))</span><br><span class="line">				   custom-open-win-apps-dir</span><br><span class="line">				 desktop)))</span><br><span class="line">	  (ivy-read &quot;Open application: &quot;</span><br><span class="line">		    #&#x27;read-file-name-internal</span><br><span class="line">		    :matcher #&#x27;counsel--find-file-matcher</span><br><span class="line">		    :initial-input custom-app-dir</span><br><span class="line">		    :action (lambda (name) (w32-shell-execute &quot;open&quot;  name ))</span><br><span class="line">		    :preselect (counsel--preselect-file)</span><br><span class="line">		    :require-match &#x27;confirm-after-completion</span><br><span class="line">		    :history &#x27;file-name-history</span><br><span class="line">		    :caller &#x27;open-file-application</span><br><span class="line">		    )))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/emacs-lisp/" rel="tag"># emacs-lisp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/03/%E8%8E%B2%E8%8A%B1%E5%B1%B1%E7%81%AF%E5%85%89show/" rel="prev" title="light show">
+                  <i class="fa fa-angle-left"></i> light show
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/08/emacs-for-fun/" rel="next" title="emacs-dired-open">
+                  emacs-dired-open <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

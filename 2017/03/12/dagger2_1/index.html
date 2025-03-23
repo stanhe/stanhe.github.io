@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="接译1，Singletons and Scoped Bindings">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger2_译(2)">
+<meta property="og:url" content="http://example.com/2017/03/12/dagger2_1/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="接译1，Singletons and Scoped Bindings">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png">
+<meta property="article:published_time" content="2017-03-12T08:33:59.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.947Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="dagger2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png">
+
+
+<link rel="canonical" href="http://example.com/2017/03/12/dagger2_1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/03/12/dagger2_1/","path":"2017/03/12/dagger2_1/","title":"Dagger2_译(2)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Dagger2_译(2) | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reusable-scope"><span class="nav-number">1.</span> <span class="nav-text">Reusable scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Releasable-references"><span class="nav-number">2.</span> <span class="nav-text">Releasable references</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lazy-injections"><span class="nav-number">3.</span> <span class="nav-text">Lazy injections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Provider-injections"><span class="nav-number">4.</span> <span class="nav-text">Provider injections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Qualifiers"><span class="nav-number">5.</span> <span class="nav-text">Qualifiers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional-bindings"><span class="nav-number">6.</span> <span class="nav-text">Optional bindings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binding-Instances"><span class="nav-number">7.</span> <span class="nav-text">Binding Instances</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compile-time-Validation"><span class="nav-number">8.</span> <span class="nav-text">Compile-time Validation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compile-time-Code-Generation"><span class="nav-number">9.</span> <span class="nav-text">Compile-time Code Generation</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/12/dagger2_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Dagger2_译(2) | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dagger2_译(2)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-12 16:33:59" itemprop="dateCreated datePublished" datetime="2017-03-12T16:33:59+08:00">2017-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png" alt="Dagger2"></p>
+<center> 接译1，Singletons and Scoped Bindings</center>
+<span id="more"></span>
+当我返回去把注解好好理了一遍之后发现dagger也就好理解多了，其实就是注解机制的使用，其设计框架还是值得学习的，有机会再深入源码。接下来是@Singleton(单例) 和 Scoped Bindings(域绑定)
+### Singletons and Scoped Bindings
+当使用@Singleton注解@Provides注解的方法时，有向图会为其所有使用该方法的依赖提供单例模式。
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Provides @Singleton static Heater provideHeater()&#123;</span><br><span class="line">    return new ElectricHeater();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@Singleton 注解也可用于注解可注入类文档，提醒维护者，该类可能被多个线程使用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Singleton</span><br><span class="line">class CoffeeMaker&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于在有向图中是通过<code>组件实例</code>的实现来连接域实例，所以组件自身需要声明其作用域。举个栗子，组件中可以包含有@Singleton和@RequestScoped注解的绑定，然而两个注解有不同的生命周期，所以这样的组件就没多大意义了。在组件中使用域注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Component(modules = DripCoffeeModule.class)</span><br><span class="line">@Singleton</span><br><span class="line">interface CoffeeShop &#123;</span><br><span class="line">  CoffeeMaker maker();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>组件可能被应用多个域注解，这表明他们有共同的别名域，组件可以绑定到任何一个声明的域中。</p>
+<h3 id="Reusable-scope"><a href="#Reusable-scope" class="headerlink" title="Reusable scope"></a>Reusable scope</h3><p>有时你想限制被@Inject注解的构造器实例化的数量 或者 @Provides方法的调用次数，但在组件或者子组件的生命周期中你不需要保证精确的相同实例个数。但在Android 环境下，这一点还是很有必要。<br>对于那些需要被重用的绑定可以使用@Reusable 域注解。@Reusable域绑定注解并不会和哪些单个的组件建立关联，而是使用缓存来管理注解。<br>也就是说如果在一个组件中使用了@Reusable绑定安装了一个Module，但是实际上只有这一个组件的一部分使用了该绑定，那么就只有这一部分被缓存。同理，如果两个拥有不同父类的组件分别使用了绑定，那么他们就会被分别缓存。如果组件的父类已经缓存了当前类实例，那么子组件将重用该实例。</p>
+<blockquote>
+<p>这里并不能保证组件只调用一次绑定，所以用@Reusable去绑定返回可变对象 或者 需要引用一个重要的相同实例就会很危险。所以如果不考虑分配次数，对无作用域的不可变对象使用@Reusable是安全的</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Reusable // It doesn&#x27;t matter how many scoopers we use, but don&#x27;t waste them.</span><br><span class="line">class CoffeeScooper &#123;</span><br><span class="line">  @Inject CoffeeScooper() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Module</span><br><span class="line">class CashRegisterModule &#123;</span><br><span class="line">  @Provides</span><br><span class="line">  @Reusable // DON&#x27;T DO THIS! You do care which register you put your cash in.</span><br><span class="line">            // Use a specific scope instead.</span><br><span class="line">  static CashRegister badIdeaCashRegister() &#123;</span><br><span class="line">    return new CashRegister();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Reusable // DON&#x27;T DO THIS! You really do want a new filter each time, so this</span><br><span class="line">          // should be unscoped.</span><br><span class="line">class CoffeeFilter &#123;</span><br><span class="line">  @Inject CoffeeFilter() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Releasable-references"><a href="#Releasable-references" class="headerlink" title="Releasable references"></a>Releasable references</h3><p>当绑定中使用域注解的时候，表明组件类持有相关object的引用直到object被回收。像Android这种内存敏感的环境下，你希望当前未使用的域object在应用内存紧张的情况下可以被删除。<br>这种情况下，就可以使用@CanReleaseReferences注解</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Documented</span><br><span class="line">@Retention(RUNTIME)</span><br><span class="line">@CanReleaseReferences</span><br><span class="line">@Scope</span><br><span class="line">public @interface MyScope &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当你决定在垃圾回收期间如果在相关域中的object没有被其他object使用的情况被删除，你可以在域中注入一个 ReleasableReferenceManager 类然后调用 releaseStrongReferences() 方法，使得组件持有这个类的 WeakReference</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Inject @ForReleasableReferences(MyScope.class)</span><br><span class="line">ReleasableReferences myScopeReferences;</span><br><span class="line"></span><br><span class="line">void lowMemory() &#123;</span><br><span class="line">  myScopeReferences.releaseStrongReferences();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理，在内存压力不大的时候，可以通过调用 restoreStrongReferences()方法 存储任何没有被垃圾回收的缓存类的强引用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void highMemory() &#123;</span><br><span class="line">  myScopeReferences.restoreStrongReferences();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Lazy-injections"><a href="#Lazy-injections" class="headerlink" title="Lazy injections"></a>Lazy injections</h3><p>有时需要懒加载，例如绑定T,可以创建Lazy<T>推迟实例化到第一次调用Lazy<T>‘s get()method方法, 如果T是单例，Lazy<T> 将为objectGraph注入相同实例，否则将为每个注入类单独保存Lazy<T>实例。不管怎样，后续调用懒加载实例都会返回相同实例。</T></T></T></T></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class GridingCoffeeMaker &#123;</span><br><span class="line">  @Inject Lazy&lt;Grinder&gt; lazyGrinder;</span><br><span class="line"></span><br><span class="line">  public void brew() &#123;</span><br><span class="line">    while (needsGrinding()) &#123;</span><br><span class="line">      // Grinder created once on first call to .get() and cached.</span><br><span class="line">      lazyGrinder.get().grind();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Provider-injections"><a href="#Provider-injections" class="headerlink" title="Provider injections"></a>Provider injections</h3><p>有时需要返回多个实例而不是一个，当你有多个选项(如 Factories，Builders，等)，一个选项是注入一个 Provider<T> 代替T。Provider<T> 每次都会调用T的绑定逻辑。如果绑定逻辑是一个@Inject注解的构造器，那么就会创建一个新实例，但是@Provides注解方法没有这种机制。</T></T></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class BigCoffeeMaker &#123;</span><br><span class="line">  @Inject Provider&lt;Filter&gt; filterProvider;</span><br><span class="line"></span><br><span class="line">  public void brew(int numberOfPots) &#123;</span><br><span class="line">  ...</span><br><span class="line">    for (int p = 0; p &lt; numberOfPots; p++) &#123;</span><br><span class="line">      maker.addFilter(filterProvider.get()); //new filter every time.</span><br><span class="line">      maker.addCoffee(...);</span><br><span class="line">      maker.percolate();</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Note</code>: Provider<T>可能创建混淆的代码，或者导致缺少作用域或打乱注入有向图结构。通常情况下是使用 factory或者 Lazy<T>来组织代码的生命周期和结构。然而Provider<T>有些情况下又很有用，一种常见的用途是在你必须使用不符合对象生命周期的传统架构的时候（例如：servlets是设计的单例模式，但只适用于要求特定数据的上下文）。</T></T></T></p>
+<h3 id="Qualifiers"><a href="#Qualifiers" class="headerlink" title="Qualifiers"></a>Qualifiers</h3><p>有时单独类型不足以识别依赖。比如一个复杂的咖啡机应用只需要单独的热水器和热板加热器。<br>这种情况下添加一个 qualifier注解 @Qualifier。下面声明一个@Named。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Qualifier</span><br><span class="line">@Documented</span><br><span class="line">@Retention(RUNTIME)</span><br><span class="line">public @interface Named &#123;</span><br><span class="line">  String value() default &quot;&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以自定义qualifier注解，或者只使用@Named注解。使用qualifiers注解字段或者参数。那么类型和qualifier注解都将被用于辨识依赖。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class ExpensiveCoffeeMaker &#123;</span><br><span class="line">  @Inject @Named(&quot;water&quot;) Heater waterHeater;</span><br><span class="line">  @Inject @Named(&quot;hot plate&quot;) Heater hotPlateHeater;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注解相应的@Provides方法以提供备选值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Provides @Named(&quot;hot plate&quot;) static Heater provideHotPlateHeater() &#123;</span><br><span class="line">  return new ElectricHeater(70);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Provides @Named(&quot;water&quot;) static Heater provideWaterHeater() &#123;</span><br><span class="line">  return new ElectricHeater(93);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>依赖项可能没有多个限定符注释。</p>
+<h3 id="Optional-bindings"><a href="#Optional-bindings" class="headerlink" title="Optional bindings"></a>Optional bindings</h3><p>如果你希望某些并没有绑定到组件的依赖起作用，可以给Module添加 @BindsOptionalOf方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@BindsOptionalOf abstract CoffeeCozy optionalCozy();</span><br></pre></td></tr></table></figure>
+
+<p>也就意味着 @Inject注解的构造器、成员和@Provides方法可以依赖一个*Optional<CoffeeCozy>*类。如果组件中有CoffeeCozy类的绑定，那么就可用。如果没有相关绑定，那么可选无效。<br>具体来说，可以注入以下任何一项：</CoffeeCozy></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;CoffeeCozy&gt;</span><br><span class="line"></span><br><span class="line">Optional&lt;Provider&lt;CoffeeCozy\&gt;&gt;</span><br><span class="line"></span><br><span class="line">Optional&lt;Lazy&lt;CoffeeCozy&gt;&gt;</span><br><span class="line"></span><br><span class="line">Optional&lt;Provider&lt;Lazy&lt;CoffeeCozy&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>如果子组件包含基础类型的绑定 那么组件中缺少的可选绑定可以出现在子组件中。</p>
+<h3 id="Binding-Instances"><a href="#Binding-Instances" class="headerlink" title="Binding Instances"></a>Binding Instances</h3><p>构建组件时通常包含可用数据，例如，假设你有使用命令行参数的应用，你可能想把这些参数绑定到组件中。<br>也许你的应用需要一个单一参数展示用户名称就可以使用@UserName String注入。你可以给组件构造器添加一个方法注解 @BindsInstance 允许在该组件中注入实例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Component(modules = AppModule.class)</span><br><span class="line">interface AppComponent &#123;</span><br><span class="line">  App app();</span><br><span class="line"></span><br><span class="line">  @Component.Builder</span><br><span class="line">  interface Builder &#123;</span><br><span class="line">    @BindsInstance Builder userName(@UserName String userName);</span><br><span class="line">    AppComponent build();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Your app then might look like</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  if (args.length &gt; 1) &#123; exit(1); &#125;</span><br><span class="line">  App app = DaggerAppComponent</span><br><span class="line">      .builder()</span><br><span class="line">      .userName(args[0])</span><br><span class="line">      .build()</span><br><span class="line">      .app();</span><br><span class="line">  app.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，调用方法时，使用提供给builder的实例来进行@UserName String的注入。@BindsInstance注解方法必须在创建组件之前调用，并传递一个非空值。<br>如果@BindsInstance的参数有@Nullable注解，那么参数可以为空。此外 builder调用者会忽视调用方法，组件也将该注入实例视为空。</p>
+<p>@BindsInstance 方法应优先使用于写一个 提供构造参数并立即提供这些值的 @Module 。</p>
+<h3 id="Compile-time-Validation"><a href="#Compile-time-Validation" class="headerlink" title="Compile-time Validation"></a>Compile-time Validation</h3><p>dagger注解处理器非常严格，如果绑定不可用或者未完成都会引起编译时错误。比如，被调用的module中缺少Executor绑定。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Module</span><br><span class="line">class DripCoffeeModule &#123;</span><br><span class="line">  @Provides static Heater provideHeater(Executor executor) &#123;</span><br><span class="line">    return new CpuHeater(executor);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译它时会报一下错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] COMPILATION ERROR :</span><br><span class="line">[ERROR] error: java.util.concurrent.Executor cannot be provided without an @Provides-annotated method.</span><br></pre></td></tr></table></figure>
+<p>这时候就需要添加@Provide方法 提供返回Executor的方法。</p>
+<h3 id="Compile-time-Code-Generation"><a href="#Compile-time-Code-Generation" class="headerlink" title="Compile-time Code Generation"></a>Compile-time Code Generation</h3><p>dagger的注解处理器也会生成源文件如 CoffeeMaker_Factory.java或者CoffeeMaker_MembersInjector.java 这些文件都是dagger的实现细节.使用中都不会直接使用到。一般我们只需要关注一个以Dagger为前缀生成的组件。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/dagger2/" rel="tag"># dagger2</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/11/annotation/" rel="prev" title="Annotation">
+                  <i class="fa fa-angle-left"></i> Annotation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/13/intellijPlugin/" rel="next" title="Create Intellij Plugin">
+                  Create Intellij Plugin <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

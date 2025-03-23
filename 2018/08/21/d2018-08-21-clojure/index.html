@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="brave clojure">
+<meta property="og:url" content="http://example.com/2018/08/21/d2018-08-21-clojure/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-21T03:49:21.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.946Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="clojure">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/08/21/d2018-08-21-clojure/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2018/08/21/d2018-08-21-clojure/","path":"2018/08/21/d2018-08-21-clojure/","title":"brave clojure"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>brave clojure | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intellij"><span class="nav-number">1.1.</span> <span class="nav-text">Intellij</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs"><span class="nav-number">1.2.</span> <span class="nav-text">Emacs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#maps"><span class="nav-number">2.1.1.</span> <span class="nav-text">maps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-number">2.1.2.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">2.1.3.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sets"><span class="nav-number">2.1.4.</span> <span class="nav-text">sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95-%E5%AE%8F-%E7%89%B9%E6%AE%8A%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">2.1.5.</span> <span class="nav-text">方法 宏 特殊表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">核心方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-ns-macro"><span class="nav-number">2.3.</span> <span class="nav-text">The ns macro</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#refer"><span class="nav-number">2.3.1.</span> <span class="nav-text">refer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alias"><span class="nav-number">2.3.2.</span> <span class="nav-text">alias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#require-use"><span class="nav-number">2.3.3.</span> <span class="nav-text">require use</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ns-macro"><span class="nav-number">2.3.4.</span> <span class="nav-text">ns macro</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Macro"><span class="nav-number">2.4.</span> <span class="nav-text">Macro</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.4.1.</span> <span class="nav-text">可能存在的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="nav-number">2.5.</span> <span class="nav-text">并发和并行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#future"><span class="nav-number">2.5.1.</span> <span class="nav-text">future</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delays"><span class="nav-number">2.5.2.</span> <span class="nav-text">delays</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#promises"><span class="nav-number">2.5.3.</span> <span class="nav-text">promises</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atoms-refs-vars"><span class="nav-number">2.6.</span> <span class="nav-text">atoms refs vars</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#atom-swap-update-in-reset"><span class="nav-number">2.6.1.</span> <span class="nav-text">atom,swap! ,update-in,reset!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watches-and-validators"><span class="nav-number">2.6.2.</span> <span class="nav-text">watches and validators</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#watch"><span class="nav-number">2.6.2.1.</span> <span class="nav-text">watch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Validators"><span class="nav-number">2.6.2.2.</span> <span class="nav-text">Validators</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#refs-transaction"><span class="nav-number">2.6.3.</span> <span class="nav-text">refs transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#commute"><span class="nav-number">2.6.3.1.</span> <span class="nav-text">commute</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vars"><span class="nav-number">2.6.4.</span> <span class="nav-text">vars</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dynamic-Var-Uses"><span class="nav-number">2.6.4.1.</span> <span class="nav-text">Dynamic Var Uses</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Altering-the-Var-Root"><span class="nav-number">2.6.4.2.</span> <span class="nav-text">Altering the Var Root</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summary"><span class="nav-number">2.6.5.</span> <span class="nav-text">summary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#core-async"><span class="nav-number">2.7.</span> <span class="nav-text">core.async</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#buffering"><span class="nav-number">2.7.1.</span> <span class="nav-text">buffering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blockng-and-parking"><span class="nav-number">2.7.2.</span> <span class="nav-text">blockng and parking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thread"><span class="nav-number">2.7.3.</span> <span class="nav-text">thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#queue"><span class="nav-number">2.7.4.</span> <span class="nav-text">queue</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-with-JVM"><span class="nav-number">2.8.</span> <span class="nav-text">Working with JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-Interop"><span class="nav-number">2.8.1.</span> <span class="nav-text">Java Interop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#import"><span class="nav-number">2.8.2.</span> <span class="nav-text">import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#files-and-input-output"><span class="nav-number">2.8.3.</span> <span class="nav-text">files and input&#x2F;output</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multimethods-protocols"><span class="nav-number">2.9.</span> <span class="nav-text">multimethods protocols</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-protocol"><span class="nav-number">2.9.1.</span> <span class="nav-text">multi protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reify"><span class="nav-number">2.9.2.</span> <span class="nav-text">reify</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deftype"><span class="nav-number">2.9.3.</span> <span class="nav-text">deftype</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/08/21/d2018-08-21-clojure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="brave clojure | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          brave clojure
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-21 11:49:21" itemprop="dateCreated datePublished" datetime="2018-08-21T11:49:21+08:00">2018-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><center> Clojure is a robust, practical, and fast programming language with a set of useful features that together form a simple, coherent, and powerful tool.
+
+</center>
+
+<span id="more"></span>
+
+<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><h2 id="Intellij"><a href="#Intellij" class="headerlink" title="Intellij"></a>Intellij</h2><p>添加插件 leinigen,cursive</p>
+<h2 id="Emacs"><a href="#Emacs" class="headerlink" title="Emacs"></a>Emacs</h2><p>clojure-mode,cider</p>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><p>clojure是一种 lisp方言，所以基本语法与lisp类似。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(+ 1 2)</span><br><span class="line">=&gt; 3</span><br><span class="line"></span><br><span class="line">(* 1 2 3)</span><br><span class="line">=&gt; 6</span><br></pre></td></tr></table></figure>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><h3 id="maps"><a href="#maps" class="headerlink" title="maps"></a>maps</h3><p>maps:  {}<br>使用 get 获取数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;:first-name &quot;stanhe&quot;&#125;</span><br><span class="line"></span><br><span class="line">(hash-map :a 1 :b 2)</span><br><span class="line">=&gt; &#123;:a 1 :b 2&#125;</span><br><span class="line"></span><br><span class="line">(get &#123;:a 0 :b 1&#125; :b)</span><br><span class="line">=&gt; 1</span><br><span class="line"></span><br><span class="line">嵌套截取</span><br><span class="line">(get-in &#123;:a 0 :b &#123;:c &quot;stanhe&quot;&#125;&#125; [:b :c])</span><br><span class="line">=&gt; &quot;stanhe&quot;</span><br><span class="line"></span><br><span class="line">(&#123;:name &quot;stanhe&quot;&#125; :name)</span><br><span class="line">=&gt; &quot;stanhe&quot;</span><br><span class="line"></span><br><span class="line">(:name &#123;:name &quot;stanhe&quot;&#125;)</span><br><span class="line">=&gt; &quot;stanhe&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p>vector: ()</p>
+<p>使用 get 获取数据 conj 添加数据到末尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(vector &quot;hello&quot; &quot;world&quot; &quot;!&quot;)</span><br><span class="line">=&gt; [&quot;hello&quot; &quot;world&quot; &quot;!&quot;]</span><br><span class="line"></span><br><span class="line">(conj [1 2 3] 4) #use (doc conj) to see details</span><br><span class="line">=&gt; [1 2 3 4] </span><br></pre></td></tr></table></figure>
+
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>list: ‘()</p>
+<p>使用 nth 获取数据 conj 添加数据到开头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x27;(1 2 3 4)</span><br><span class="line"></span><br><span class="line">(nth &#x27;(7 2 1 8) 3)</span><br><span class="line">=&gt; 1</span><br><span class="line"></span><br><span class="line">(list 1 2 3 &quot;hello&quot;)</span><br><span class="line">=&gt; (1 2 3 &quot;hello&quot;)</span><br><span class="line"></span><br><span class="line">(conj &#x27;(1 2 3) 4)</span><br><span class="line">=&gt; (4 1 2 3)</span><br></pre></td></tr></table></figure>
+<p>nth比get慢：</p>
+<p>因为clojure要得到list的所有索引后才开始计算nth，而get不用。</p>
+<p>使用vector还是list？</p>
+<p>当需要添加到seq开头的时候或者写一个宏的时候使用list，其他情况使用vector。</p>
+<h3 id="sets"><a href="#sets" class="headerlink" title="sets"></a>sets</h3><p>clojure 有两种sets： hash sets and sorted sets</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(hash-set 1 1 2 2)</span><br><span class="line">=&gt; #&#123;1 2&#125;</span><br><span class="line"></span><br><span class="line">(contains? #&#123;:a nil&#125; nil)</span><br><span class="line">=&gt; true</span><br><span class="line"></span><br><span class="line">使用get 获取nil总是返回nil</span><br></pre></td></tr></table></figure>
+<h3 id="方法-宏-特殊表达式"><a href="#方法-宏-特殊表达式" class="headerlink" title="方法 宏 特殊表达式"></a>方法 宏 特殊表达式</h3><p>特殊表达式如： if do when cond condp case</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">(for [x [0 1 2 3 4 5]</span><br><span class="line">	:let [y (* x 3)]</span><br><span class="line">	:when (even? y)]</span><br><span class="line">	y)</span><br><span class="line">	</span><br><span class="line">=&gt; (0 6 12)	</span><br><span class="line"></span><br><span class="line">(defn test</span><br><span class="line">	[key]</span><br><span class="line">	(condp = key</span><br><span class="line">		:a (println &quot;a&quot;)</span><br><span class="line">		:b (println &quot;b&quot;)))</span><br><span class="line"></span><br><span class="line">(let [v value]</span><br><span class="line">	(cond</span><br><span class="line">		(&gt; v 90) &quot;A&quot;</span><br><span class="line">		(&gt; v 80) &quot;B&quot;</span><br><span class="line">		(&gt; v 70) &quot;C&quot;</span><br><span class="line">		:else &quot;D&quot;))</span><br><span class="line"></span><br><span class="line">(case 1 1 &quot;1&quot; 2 &quot;2&quot;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a>核心方法</h2><p>with (doc map) to view details</p>
+<p>map</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(map inc [1 2 3])</span><br><span class="line">=&gt; [2 3 4]</span><br></pre></td></tr></table></figure>
+<p>reduce</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(reduce #(+ %1 (* 2 %2)) 0 [1 2 3 4])</span><br><span class="line">=&gt; 20</span><br></pre></td></tr></table></figure>
+<p>take</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(take 2 [2 3 4 5])</span><br><span class="line">=&gt; (2 3)</span><br><span class="line"></span><br><span class="line">#more:</span><br><span class="line">(take 5 (repeat &quot;ok&quot;))</span><br><span class="line"></span><br><span class="line">(take 15 (repeatdly #(rand-int 10)))</span><br></pre></td></tr></table></figure>
+<p>drop </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(drop 2 [2 3 4 5])</span><br><span class="line">=&gt; (4 5)</span><br></pre></td></tr></table></figure>
+<p>take-while drop-while same as take and drop</p>
+<p>some filter </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(some #(&gt; (:critter %) 3) food-journal)</span><br><span class="line">(some #(and (&gt; (:critter %) 3) %) food-journal)</span><br></pre></td></tr></table></figure>
+<p>others:</p>
+<p>sort sort-by collection into conj function apply partial</p>
+<p>apply</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(apply str [&quot;1 &quot; &quot;hello &quot; &quot;world &quot;])</span><br><span class="line">=&gt; &quot;1 hello world &quot;</span><br></pre></td></tr></table></figure>
+<p>partial</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">((partial + 1) 2)</span><br><span class="line">=&gt; 3</span><br></pre></td></tr></table></figure>
+<p>comp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((comp inc *) 2 3) = (inc (* 2 3))</span><br></pre></td></tr></table></figure>
+<p>memoize</p>
+<p>zipmap</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(zipmap [:a :b] [1 2])</span><br><span class="line">=&gt;&#123;:a 1 :b 2&#125;</span><br></pre></td></tr></table></figure>
+
+<p>merge-with</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(merge-with - &#123;:lat 50 :lng 10&#125; &#123;:lat 15 :lng 5&#125;)</span><br><span class="line">=&gt;&#123;:lat 45 :lng 5&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-ns-macro"><a href="#The-ns-macro" class="headerlink" title="The ns macro"></a>The ns macro</h2><h3 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h3><p>refer filters: only,:exclude,:rename</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(clojure.core/refer &#x27;chess.taxonmy :only [&#x27;bries])</span><br><span class="line">(clojure.core/refer &#x27;chess.taxonmy :rename [&#x27;bries &#x27;yummy])</span><br></pre></td></tr></table></figure>
+<h3 id="alias"><a href="#alias" class="headerlink" title="alias"></a>alias</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(clojure.core/alias &#x27;test &#x27;clojure.core)</span><br></pre></td></tr></table></figure>
+<h3 id="require-use"><a href="#require-use" class="headerlink" title="require use"></a>require use</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(require ``) # find the symb</span><br><span class="line">(refer ``) # refer to use it</span><br><span class="line"></span><br><span class="line">(require &#x27;[the-divine.svg :as svg])</span><br><span class="line"># eq to this:</span><br><span class="line">(require &#x27;the-divine.svg)</span><br><span class="line">(alias &#x27;svg &#x27;the-divine.svg)</span><br><span class="line"></span><br><span class="line">(use &#x27;stan.core)</span><br><span class="line"># eq to this:</span><br><span class="line">(require &#x27;stan.core)</span><br><span class="line">(refer &#x27;stan.core)</span><br></pre></td></tr></table></figure>
+<h3 id="ns-macro"><a href="#ns-macro" class="headerlink" title="ns macro"></a>ns macro</h3><p>ns 宏中不用 &#96;,一般使用 require限定引入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(ns handler.core</span><br><span class="line">	(:use [clojure.java browse io]))</span><br><span class="line"># eq to this:</span><br><span class="line">(in-ns &#x27;handler.core)</span><br><span class="line">(use &#x27;clojure.java.browse)</span><br><span class="line">(use &#x27;clojure.java.io)</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<h2 id="Macro"><a href="#Macro" class="headerlink" title="Macro"></a>Macro</h2><p>宏可以使用“‘” 或者syntax quoting “&#96;”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(defmacro my-print</span><br><span class="line">	[express]</span><br><span class="line">	(list &#x27;let [&#x27;result express]</span><br><span class="line">	(list &#x27;println &#x27;result)</span><br><span class="line">	&#x27;result))</span><br></pre></td></tr></table></figure>
+<p>使用syntax quoting的作用</p>
+<ul>
+<li>返回方法的权限定名</li>
+<li>递归quotes所有元素，可以通过～取消quote，@解开seq</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">`(+ 1 ~(inc 1))</span><br><span class="line">=&gt; (clojure.core/+ 1 2)</span><br><span class="line"></span><br><span class="line">(defmacro code-critic</span><br><span class="line">	[bad good]</span><br><span class="line">	`(do (println &quot;bad: &quot; (quote ~bad)</span><br><span class="line">		(println &quot;good &quot; (quote ~good)))))</span><br><span class="line">		</span><br><span class="line">`(+ ~(list 1 2 3))</span><br><span class="line">=&gt; (clojure.core/+ (1 2 3))</span><br><span class="line"></span><br><span class="line">`(+ ~@(list 1 2 3))</span><br><span class="line">=&gt; (clojure.core/+ 1 2 3)</span><br></pre></td></tr></table></figure>
+<p>当写一个宏使用 &amp;参数的时候需要使用 @解开seq</p>
+<h3 id="可能存在的问题"><a href="#可能存在的问题" class="headerlink" title="可能存在的问题"></a>可能存在的问题</h3><ul>
+<li>内部变量错误调用</li>
+<li>多次evaluation<br>使用# auto-gensysm 生成唯一符号</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`(let [name# &quot;Larry Potter&quot;] name#)</span><br></pre></td></tr></table></figure>
+<h2 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h2><p>futures delays and promises</p>
+<h3 id="future"><a href="#future" class="headerlink" title="future"></a>future</h3><p>新开一个线程执行返回结果的引用，结果会被缓存，code只会执行一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(let [result (feture (println &quot;this prints once&quot;)</span><br><span class="line">	(+ 1 1))]</span><br><span class="line">	(println &quot;deref: &quot; (deref result))</span><br><span class="line">	(println &quot;@: &quot; @result))</span><br><span class="line">	</span><br><span class="line">	=&gt; &quot;this prints once&quot;</span><br><span class="line">	=&gt; deref: 2</span><br><span class="line">	=&gt; @: 2</span><br><span class="line"></span><br><span class="line">;;(deref (future (express) back) timeout-ms timout-value)</span><br><span class="line">(deref (future (Thread/sleep 1000) 0) 10 5)</span><br><span class="line">=&gt;5</span><br><span class="line"></span><br><span class="line">(realized? (future (thread/sleep 1000)))</span><br><span class="line">=&gt; false</span><br><span class="line"></span><br><span class="line">(let [f (future)]</span><br><span class="line">	@f</span><br><span class="line">	(realized? f))</span><br><span class="line">=&gt; true	</span><br></pre></td></tr></table></figure>
+<h3 id="delays"><a href="#delays" class="headerlink" title="delays"></a>delays</h3><p>和future 类似,也只会执行一次，且会缓存结果，使用间接引用或者force执行delay</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(def gimli-headshots [&quot;serious.jpg&quot; &quot;fun.jpg&quot; &quot;playful.jpg&quot;])</span><br><span class="line"></span><br><span class="line">(defn email-user</span><br><span class="line">  [email-address]</span><br><span class="line">  (println &quot;Sending headshot notification to&quot; email-address))</span><br><span class="line"></span><br><span class="line">(defn upload-document</span><br><span class="line">  &quot;Needs to be implemented&quot;</span><br><span class="line">  [headshot]</span><br><span class="line">  true)</span><br><span class="line"></span><br><span class="line">(let [notify (delay ➊(email-user &quot;and-my-axe@gmail.com&quot;))]</span><br><span class="line">  (doseq [headshot gimli-headshots]</span><br><span class="line">    (future (upload-document headshot)</span><br><span class="line">            ➋(force notify))))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="promises"><a href="#promises" class="headerlink" title="promises"></a>promises</h3><p>表示一个我自己期望写入的值，使用deliverf派发，同样只能派发一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(let [ferengi (promise)]</span><br><span class="line">	(future (println &quot;Here is some Ferengi: &quot; @ferengi)</span><br><span class="line">	(Thread/sleep 100)</span><br><span class="line">	(deliver ferengi &quot;wisper your way&quot;)))</span><br></pre></td></tr></table></figure>
+<p>rolling your own quene</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">(defmacro enqueue</span><br><span class="line">➊   ([q concurrent-promise-name concurrent serialized]</span><br><span class="line">➋    `(let [~concurrent-promise-name (promise)]</span><br><span class="line">      (future (deliver ~concurrent-promise-name ~concurrent))</span><br><span class="line">➌       (deref ~q)</span><br><span class="line">      ~serialized</span><br><span class="line">      ~concurrent-promise-name))</span><br><span class="line">➍   ([concurrent-promise-name concurrent serialized]</span><br><span class="line">   `(enqueue (future) ~concurrent-promise-name ~concurrent ~serialized)))</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">(time @(-&gt; (enqueue saying (wait 200 &quot;&#x27;Ello, gov&#x27;na!&quot;) (println @saying))</span><br><span class="line">           (enqueue saying (wait 400 &quot;Pip pip!&quot;) (println @saying))</span><br><span class="line">           (enqueue saying (wait 100 &quot;Cheerio!&quot;) (println @saying))))</span><br><span class="line">; =&gt; &#x27;Ello, gov&#x27;na!</span><br><span class="line">; =&gt; Pip pip!</span><br><span class="line">; =&gt; Cheerio!</span><br><span class="line">; =&gt; &quot;Elapsed time: 401.635 msecs&quot; </span><br></pre></td></tr></table></figure>
+<h2 id="atoms-refs-vars"><a href="#atoms-refs-vars" class="headerlink" title="atoms refs vars"></a>atoms refs vars</h2><h3 id="atom-swap-update-in-reset"><a href="#atom-swap-update-in-reset" class="headerlink" title="atom,swap! ,update-in,reset!"></a>atom,swap! ,update-in,reset!</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">(def fred (atom &#123;:a 0 :b 1&#125;))</span><br><span class="line">@fred</span><br><span class="line">;=&gt; &#123;:a 0 :b 1)</span><br><span class="line"></span><br><span class="line">swap! receives an atom and a function as arguments. It applies the function to the atom’s current state to produce a new value, and then it updates the atom to refer to this new value. The new value is also returned. Here’s how you might increase Fred’s cuddle hunger level by one:</span><br><span class="line"></span><br><span class="line">;; update in use get.</span><br><span class="line">(swap! fred update-in [:cuddle-hunger-level] + 10)</span><br><span class="line">; =&gt; &#123;:cuddle-hunger-level 22, :percent-deteriorated 1&#125;</span><br><span class="line"></span><br><span class="line">(swap! fred</span><br><span class="line">       (fn [current-state]</span><br><span class="line">         (merge-with + current-state &#123;:cuddle-hunger-level 1&#125;)))</span><br><span class="line">; =&gt; &#123;:cuddle-hunger-level 1, :percent-deteriorated 0&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">This is all interesting and fun, but what happens if two separate threads call (swap! fred increase-cuddle-hunger-level 1)? Is it possible for one of the increments to get lost the way it did in the Ruby example at Listing 10-1?</span><br><span class="line"></span><br><span class="line">The answer is no! swap! implements compare-and-set semantics, meaning it does the following internally:</span><br><span class="line"></span><br><span class="line">It reads the current state of the atom.</span><br><span class="line">It then applies the update function to that state.</span><br><span class="line">Next, it checks whether the value it read in step 1 is identical to the atom’s current value.</span><br><span class="line">If it is, then swap! updates the atom to refer to the result of step 2.</span><br><span class="line">If it isn’t, then swap! retries, going through the process again with step 1.</span><br><span class="line">This process ensures that no swaps will ever get lost.</span><br><span class="line"></span><br><span class="line">Sometimes you’ll want to update an atom without checking its current value</span><br><span class="line"></span><br><span class="line">(reset! fred &#123;:cuddle-hunger-level 0</span><br><span class="line">              :percent-deteriorated 0&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="watches-and-validators"><a href="#watches-and-validators" class="headerlink" title="watches and validators"></a>watches and validators</h3><p>Watches allow you to be super creepy and check in on your reference types’ every move. Validators allow you to be super controlling and restrict what states are allowable. Both watches and validators are plain ol’ functions.</p>
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>A watch is a function that takes four arguments: a key, the reference being watched, its previous state, and its new state. You can register any number of watches with a reference type.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">(add-watch ref key watch-fn)</span><br><span class="line">;; it&#x27;s watch fn must be a fn of 4 args: a key ,the reference, its old-state,it&#x27;s new-state.</span><br><span class="line"></span><br><span class="line">(defn shuffle-speed</span><br><span class="line">  [zombie]</span><br><span class="line">  (* (:cuddle-hunger-level zombie)</span><br><span class="line">     (- 100 (:percent-deteriorated zombie))))</span><br><span class="line">     </span><br><span class="line"> (defn shuffle-alert</span><br><span class="line">  [key watched old-state new-state]</span><br><span class="line">  (let [sph (shuffle-speed new-state)]</span><br><span class="line">    (if (&gt; sph 5000)</span><br><span class="line">      (do</span><br><span class="line">        (println &quot;Run, you fool!&quot;)</span><br><span class="line">        (println &quot;The zombie&#x27;s SPH is now &quot; sph)</span><br><span class="line">        (println &quot;This message brought to your courtesy of &quot; key))</span><br><span class="line">      (do</span><br><span class="line">        (println &quot;All&#x27;s well with &quot; key)</span><br><span class="line">        (println &quot;Cuddle hunger: &quot; (:cuddle-hunger-level new-state))</span><br><span class="line">        (println &quot;Percent deteriorated: &quot; (:percent-deteriorated new-state))</span><br><span class="line">        (println &quot;SPH: &quot; sph)))))</span><br><span class="line">        </span><br><span class="line">(reset! fred &#123;:cuddle-hunger-level 22</span><br><span class="line">              :percent-deteriorated 2&#125;)</span><br><span class="line">(add-watch fred :fred-shuffle-alert shuffle-alert)</span><br><span class="line">(swap! fred update-in [:percent-deteriorated] + 1)</span><br><span class="line">; =&gt; All&#x27;s well with  :fred-shuffle-alert</span><br><span class="line">; =&gt; Cuddle hunger:  22</span><br><span class="line">; =&gt; Percent deteriorated:  3</span><br><span class="line">; =&gt; SPH:  2134</span><br><span class="line"></span><br><span class="line">(swap! fred update-in [:cuddle-hunger-level] + 30)</span><br><span class="line">; =&gt; Run, you fool!</span><br><span class="line">; =&gt; The zombie&#x27;s SPH is now 5044</span><br><span class="line">; =&gt; This message brought to your courtesy of :fred-shuffle-alert      </span><br><span class="line"></span><br><span class="line">(remove-watch fred :fred-shuffle-alert)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="Validators"><a href="#Validators" class="headerlink" title="Validators"></a>Validators</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(defn percent-deteriorated-validator</span><br><span class="line">  [&#123;:keys [percent-deteriorated]&#125;]</span><br><span class="line">  (or (and (&gt;= percent-deteriorated 0)</span><br><span class="line">       (&lt;= percent-deteriorated 100))</span><br><span class="line">       (throw (IllegalStateException. &quot;That&#x27;s not mathy!&quot;))))</span><br><span class="line">       </span><br><span class="line">(def bobby</span><br><span class="line">  (atom</span><br><span class="line">   &#123;:cuddle-hunger-level 0 :percent-deteriorated 0&#125;</span><br><span class="line">    :validator percent-deteriorated-validator))</span><br><span class="line">(swap! bobby update-in [:percent-deteriorated] + 200)</span><br><span class="line">; This throws &quot;Invalid reference state&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="refs-transaction"><a href="#refs-transaction" class="headerlink" title="refs transaction"></a>refs transaction</h3><p>Refs allow you to update the state of multiple identities using transaction semantics. These transactions have three features:</p>
+<ul>
+<li>They are atomic, meaning that all refs are updated or none of them are.</li>
+<li>They are consistent, meaning that the refs always appear to have valid states. A sock will always belong to a dryer or a gnome, but never both or neither.</li>
+<li>They are isolated, meaning that transactions behave as if they executed serially; if two threads are simultaneously running transactions that alter the same ref, one transaction will retry. This is similar to the compare-and-set semantics of atoms.</li>
+</ul>
+<blockquote>
+<p>Clojure uses software transactional memory (STM) to implement this behavior.</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(def sock-varieties</span><br><span class="line">  #&#123;&quot;darned&quot; &quot;argyle&quot; &quot;wool&quot; &quot;horsehair&quot; &quot;mulleted&quot; &quot;passive-aggressive&quot; &quot;striped&quot; &quot;polka-dotted&quot; &quot;athletic&quot; &quot;business&quot; &quot;power&quot; &quot;invisible&quot; &quot;gollumed&quot;&#125;)</span><br><span class="line"></span><br><span class="line">(defn sock-count</span><br><span class="line">  [sock-variety count]</span><br><span class="line">  &#123;:variety sock-variety</span><br><span class="line">   :count count&#125;)</span><br><span class="line">(defn generate-sock-gnome</span><br><span class="line">  &quot;Create an initial sock gnome state with no socks&quot;</span><br><span class="line">  [name]</span><br><span class="line">  &#123;:name name :socks #&#123;&#125;&#125;)</span><br><span class="line">;;(def sock-gnome (ref (generate-sock-gnome &quot;Barumpharumph&quot;)))</span><br><span class="line">(def sock-gnome (ref &#123;:name &quot;hello&quot; :socks #&#123;&#125;&#125;))</span><br><span class="line">(def dryer (ref &#123;:name &quot;LG 1337&quot; :socks (set (map #(sock-count % 2) sock-varieties))&#125;))</span><br><span class="line"></span><br><span class="line">We’ll want to modify the sock-gnome ref to show that it has gained a sock and modify the dryer ref to show that it’s lost a sock. You modify refs using alter, and you must use alter within a transaction. dosync initiates a transaction and defines its extent; you put all transaction operations in its body. Here we use these tools to define a steal-sock function, and then call it on our two refs:</span><br><span class="line"></span><br><span class="line">(defn steal-sock</span><br><span class="line">  [gnome dryer]</span><br><span class="line">  (dosync</span><br><span class="line">   (when-let [pair (some #(if (= (:count %) 2) %) (:socks @dryer))]</span><br><span class="line">     (let [updated-count (sock-count (:variety pair) 1)]</span><br><span class="line">       (alter gnome update-in [:socks] conj updated-count)</span><br><span class="line">       (alter dryer update-in [:socks] disj pair)</span><br><span class="line">       (alter dryer update-in [:socks] conj updated-count)))))</span><br><span class="line">(steal-sock sock-gnome dryer)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>There are a couple of details to note here: when you alter a ref, the change isn’t immediately visible outside of the current transaction. This is what lets you call alter on the dryer twice within a transaction without worry­ing about whether dryer will be read in an inconsistent state. Similarly, if you alter a ref and then deref it within the same transaction, the deref will return the new state.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(def counter (ref 0))</span><br><span class="line">(future</span><br><span class="line">    (dosync</span><br><span class="line">        (alter counter inc)</span><br><span class="line">        (println @counter)</span><br><span class="line">        (Thread/sleep 500)</span><br><span class="line">        (alter @counter)))</span><br><span class="line">(Thead/sleep 250)</span><br><span class="line">(println @counter)</span><br><span class="line">;=&gt; 1 ;;in transaction thread</span><br><span class="line">;=&gt; 0 ;;in main thread</span><br><span class="line">;=&gt; 2 ;;in transaction thread</span><br></pre></td></tr></table></figure>
+<h4 id="commute"><a href="#commute" class="headerlink" title="commute"></a>commute</h4><p>commute allows you to update a ref’s state within a transaction, just like alter. However, its behavior at commit time is completely different.</p>
+<p>Here’s how alter behaves:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Reach outside the transaction and read the ref’s current state.</span><br><span class="line">2. Compare the current state to the state the ref started with within the transaction.</span><br><span class="line">3. If the two differ, make the transaction retry.</span><br><span class="line">4. Otherwise, commit the altered ref state.</span><br></pre></td></tr></table></figure>
+<p>commute, on the other hand, behaves like this at commit time:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. Reach outside the transaction and read the ref’s current state.</span><br><span class="line">2. Run the commute function again using the current state.</span><br><span class="line">3. Commit the result.</span><br></pre></td></tr></table></figure>
+
+<h3 id="vars"><a href="#vars" class="headerlink" title="vars"></a>vars</h3><p>Dynamic Binding</p>
+<p>First, create a dynamic var:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(def ^:dynamic *notification-address* &quot;dobby@elf.org&quot;)</span><br><span class="line"></span><br><span class="line">Notice two important details here. First, you use ^:dynamic to signal to Clojure that a var is dynamic. Second, the var’s name is enclosed by asterisks. Lispers call these earmuffs, which is adorable. Clojure requires you to enclose the names of dynamic vars in earmuffs. </span><br><span class="line"></span><br><span class="line">(binding [*notification-address* &quot;test@elf.org&quot;]</span><br><span class="line">  *notification-address*)</span><br><span class="line">; =&gt; &quot;test@elf.org&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="Dynamic-Var-Uses"><a href="#Dynamic-Var-Uses" class="headerlink" title="Dynamic Var Uses"></a>Dynamic Var Uses</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(def ^:dynamic *troll-thought* nil)</span><br><span class="line">(defn troll-riddle</span><br><span class="line">  [your-answer]</span><br><span class="line">  (let [number &quot;man meat&quot;]</span><br><span class="line">➊     (when (thread-bound? #&#x27;*troll-thought*)</span><br><span class="line">➋       (set! *troll-thought* number))</span><br><span class="line">    (if (= number your-answer)</span><br><span class="line">      &quot;TROLL: You can cross the bridge!&quot;</span><br><span class="line">      &quot;TROLL: Time to eat you, succulent human!&quot;)))</span><br><span class="line"></span><br><span class="line">(binding [*troll-thought* nil]</span><br><span class="line">  (println (troll-riddle 2))</span><br><span class="line">  (println &quot;SUCCULENT HUMAN: Oooooh! The answer was&quot; *troll-thought*))</span><br><span class="line"></span><br><span class="line">; =&gt; TROLL: Time to eat you, succulent human!</span><br><span class="line">; =&gt; SUCCULENT HUMAN: Oooooh! The answer was man meat</span><br></pre></td></tr></table></figure>
+<h4 id="Altering-the-Var-Root"><a href="#Altering-the-Var-Root" class="headerlink" title="Altering the Var Root"></a>Altering the Var Root</h4><p>Here’s how you’d create a lazy seq of random numbers between 0 and 9:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(take 5 (repeatedly (partial rand-int 10)))</span><br><span class="line">; =&gt; (1 5 0 3 4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(def alphabet-length 26)</span><br><span class="line"></span><br><span class="line">;; Vector of chars, A-Z</span><br><span class="line">(def letters (mapv (comp str char (partial + 65)) (range alphabet-length)))</span><br><span class="line"></span><br><span class="line">(defn random-string</span><br><span class="line">  &quot;Returns a random string of specified length&quot;</span><br><span class="line">  [length]</span><br><span class="line">  (apply str (take length (repeatedly #(rand-nth letters)))))</span><br><span class="line">  </span><br><span class="line">(defn random-string-list</span><br><span class="line">  [list-length string-length]</span><br><span class="line">  (doall (take list-length (repeatedly (partial random-string string-length)))))</span><br><span class="line"></span><br><span class="line">(def orc-names (random-string-list 3000 7000))</span><br><span class="line"></span><br><span class="line">The dorun function does just what we need: it realizes the sequence but returns nil:</span><br><span class="line"></span><br><span class="line">(time (dorun (map clojure.string/lower-case orc-names)))</span><br><span class="line">; =&gt; &quot;Elapsed time: 270.182 msecs&quot;</span><br><span class="line"></span><br><span class="line">(time (dorun (pmap clojure.string/lower-case orc-names)))</span><br><span class="line">; =&gt; &quot;Elapsed time: 147.562 msecs&quot;</span><br></pre></td></tr></table></figure>
+<p>There is some overhead for creating the threads,on my test</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tmacro.core&gt; (time (dorun (map clojure.string/lower-case orc-names)))</span><br><span class="line">&quot;Elapsed time: 188.374934 msecs&quot;</span><br><span class="line">nil</span><br><span class="line">tmacro.core&gt; (time (dorun (pmap clojure.string/lower-case orc-names)))</span><br><span class="line">&quot;Elapsed time: 235.66113 msecs&quot;</span><br></pre></td></tr></table></figure>
+<p>use partiton-all</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(def numbers [1 2 3 4 5 6 7 8 9 10])</span><br><span class="line">(partition-all 3 numbers)</span><br><span class="line">; =&gt; ((1 2 3) (4 5 6) (7 8 9) (10))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(def orc-names (random-string-list 20000 300))</span><br><span class="line"></span><br><span class="line">(time (dorun (map clojure.string/lower-case orc-names)))</span><br><span class="line">(time (dorun (pmap clojure.string/lower-case orc-names)))</span><br><span class="line">(time (dorun</span><br><span class="line">       (apply concat</span><br><span class="line">              (pmap (fn [name] (doall (map clojure.string/lower-case name)))</span><br><span class="line">                    (partition-all 1000 orc-names)))))</span><br><span class="line"></span><br><span class="line">&quot;Elapsed time: 48.199778 msecs&quot;</span><br><span class="line">&quot;Elapsed time: 141.007598 msecs&quot;</span><br><span class="line">&quot;Elapsed time: 57.68705 msecs&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h3><p>The atom reference type allows you to create an identity that you can safely update to refer to new values using swap! and reset!. The ref reference type is handy when you want to update more than one identity using transaction semantics, and you update it with alter! and commute!.</p>
+<h2 id="core-async"><a href="#core-async" class="headerlink" title="core.async"></a>core.async</h2><p>org.clojure.core.async</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(def echo-chan (chan))</span><br><span class="line">(go (println (&lt;! echo-chan)))</span><br><span class="line">(&gt;!! echo-chan &quot;ketchup&quot;)</span><br><span class="line">; =&gt; true</span><br><span class="line">; =&gt; ketchup</span><br></pre></td></tr></table></figure>
+<h3 id="buffering"><a href="#buffering" class="headerlink" title="buffering"></a>buffering</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(def echo-buffer (chan 2))</span><br><span class="line">(&gt;!! echo-buffer &quot;ketchup&quot;)</span><br><span class="line">; =&gt; true</span><br><span class="line">(&gt;!! echo-buffer &quot;ketchup&quot;)</span><br><span class="line">; =&gt; true</span><br><span class="line">(&gt;!! echo-buffer &quot;ketchup&quot;)</span><br><span class="line">; This blocks because the channel buffer is full</span><br></pre></td></tr></table></figure>
+<h3 id="blockng-and-parking"><a href="#blockng-and-parking" class="headerlink" title="blockng and parking"></a>blockng and parking</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">	    Inside go block        Outside go block</span><br><span class="line">put	    &gt;! or &gt;!!	            &gt;!!</span><br><span class="line">take	&lt;! or &lt;!!	            &lt;!!</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="thread"><a href="#thread" class="headerlink" title="thread"></a>thread</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(thread (println (&lt;!! echo-chan)))</span><br><span class="line">(&gt;!! echo-chan &quot;mustard&quot;)</span><br><span class="line">; =&gt; true</span><br><span class="line">; =&gt; mustard</span><br><span class="line"></span><br><span class="line">thread acts almost exactly like future: it creates a new thread and executes a process on that thread. Unlike future, instead of returning an object that you can dereference, thread returns a channel. When thread’s process stops, the process’s return value is put on the channel that thread returns:</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>THe Hot dog machine process you’ve been longing for</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(let [c1 (chan)</span><br><span class="line">      c2 (chan)</span><br><span class="line">      c3 (chan)]</span><br><span class="line">  (go (&gt;! c2 (clojure.string/upper-case (&lt;! c1))))</span><br><span class="line">  (go (&gt;! c3 (clojure.string/reverse (&lt;! c2))))</span><br><span class="line">  (go (println (&lt;! c3)))</span><br><span class="line">  (&gt;!! c1 &quot;redrum&quot;))</span><br><span class="line">; =&gt; MURDER</span><br></pre></td></tr></table></figure>
+<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">(defn append-to-file</span><br><span class="line">  &quot;Write a string to the end of a file&quot;</span><br><span class="line">  [filename s]</span><br><span class="line">  (spit filename s :append true))</span><br><span class="line"></span><br><span class="line">(defn format-quote</span><br><span class="line">  &quot;Delineate the beginning and end of a quote because it&#x27;s convenient&quot;</span><br><span class="line">  [quote]</span><br><span class="line">  (str &quot;=== BEGIN QUOTE ===\n&quot; quote &quot;=== END QUOTE ===\n\n&quot;))</span><br><span class="line"></span><br><span class="line">(defn random-quote</span><br><span class="line">  &quot;Retrieve a random quote and format it&quot;</span><br><span class="line">  []</span><br><span class="line">  (format-quote (slurp &quot;http://www.braveclojure.com/random-quote&quot;)))</span><br><span class="line"></span><br><span class="line">(defn snag-quotes</span><br><span class="line">  [filename num-quotes]</span><br><span class="line">  (let [c (chan)]</span><br><span class="line">    (go (while true (append-to-file filename (&lt;! c))))</span><br><span class="line">    (dotimes [n num-quotes] (go (&gt;! c (random-quote))))))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Working-with-JVM"><a href="#Working-with-JVM" class="headerlink" title="Working with JVM"></a>Working with JVM</h2><h3 id="Java-Interop"><a href="#Java-Interop" class="headerlink" title="Java Interop"></a>Java Interop</h3><p>You can call methods on an object using (.methodName object). For example, because all Clojure strings are implemented as Java strings, you can call Java methods on them:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(.toUpperCase &quot;By Bluebeard&#x27;s bananas!&quot;)</span><br><span class="line">; =&gt; &quot;BY BLUEBEARD&#x27;S BANANAS!&quot;</span><br><span class="line"></span><br><span class="line">➊ (.indexOf &quot;Let&#x27;s synergize our bleeding edges&quot; &quot;y&quot;) </span><br><span class="line">; =&gt; 7</span><br><span class="line"></span><br><span class="line">Notice that Clojure’s syntax allows you to pass arguments to Java methods. In this example, at ➊ you passed the argument &quot;y&quot; to the indexOf method.</span><br><span class="line"></span><br><span class="line">You can also call static methods on classes and access classes’ static fields. Observe!</span><br><span class="line"></span><br><span class="line">➊ (java.lang.Math/abs -3) </span><br><span class="line">; =&gt; 3</span><br><span class="line"></span><br><span class="line">➋ java.lang.Math/PI </span><br><span class="line">; =&gt; 3.141592653589793</span><br></pre></td></tr></table></figure>
+<h3 id="import"><a href="#import" class="headerlink" title="import"></a>import</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(import [java.util Date Stack]</span><br><span class="line">        [java.net Proxy URI])</span><br><span class="line">(Date.)</span><br><span class="line">;=&gt; #inst &quot;2018-08-06T07:29:03.149-00:00&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="files-and-input-output"><a href="#files-and-input-output" class="headerlink" title="files and input&#x2F;output"></a>files and input&#x2F;output</h3><p>spit slurp with-open</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">(let [file (java.io.File. &quot;/&quot;)]</span><br><span class="line">➊   (println (.exists file))  </span><br><span class="line">➋   (println (.canWrite file))</span><br><span class="line">➌   (println (.getPath file))) </span><br><span class="line">; =&gt; true</span><br><span class="line">; =&gt; false</span><br><span class="line">; =&gt; /</span><br><span class="line"></span><br><span class="line">(spit &quot;/tmp/hercules-todo-list&quot;</span><br><span class="line">&quot;- kill dat lion brov</span><br><span class="line">- chop up what nasty multi-headed snake thing&quot;)</span><br><span class="line"></span><br><span class="line">(slurp &quot;/tmp/hercules-todo-list&quot;)</span><br><span class="line"></span><br><span class="line">; =&gt; &quot;- kill dat lion brov</span><br><span class="line">      - chop up what nasty multi-headed snake thing&quot;</span><br><span class="line">      </span><br><span class="line">(let [s (java.io.StringWriter.)]</span><br><span class="line">  (spit s &quot;- capture cerynian hind like for real&quot;)</span><br><span class="line">  (.toString s))</span><br><span class="line">; =&gt; &quot;- capture cerynian hind like for real&quot;</span><br><span class="line"></span><br><span class="line">(let [s (java.io.StringReader. &quot;- get erymanthian pig what with the tusks&quot;)]</span><br><span class="line">  (slurp s))</span><br><span class="line">; =&gt; &quot;- get erymanthian pig what with the tusks&quot;</span><br><span class="line"></span><br><span class="line">The with-open macro is another convenience: it implicitly closes a resource at the end of its body, ensuring that you don’t accidentally tie up resources by forgetting to manually close the resource. </span><br><span class="line"></span><br><span class="line">(with-open [todo-list-rdr (clojure.java.io/reader &quot;/tmp/hercules-todo-list&quot;)]</span><br><span class="line">  (println (first (line-seq todo-list-rdr))))</span><br><span class="line">; =&gt; - kill dat lion brov</span><br></pre></td></tr></table></figure>
+
+<h2 id="multimethods-protocols"><a href="#multimethods-protocols" class="headerlink" title="multimethods protocols"></a>multimethods protocols</h2><h3 id="multi-protocol"><a href="#multi-protocol" class="headerlink" title="multi protocol"></a>multi protocol</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(defmulti area (fn [shape &amp; _] shape))</span><br><span class="line">(defmethod area :triangle</span><br><span class="line">  [_ base height]</span><br><span class="line">  (/ (* base height) 2))</span><br><span class="line">(defmethod area :square</span><br><span class="line">  [_ side]</span><br><span class="line">  (* side side))</span><br><span class="line">(defmethod area :rectangle</span><br><span class="line">  [_ length width]</span><br><span class="line">  (* length width))</span><br><span class="line">(defmethod area :circle</span><br><span class="line">  [_ radius]</span><br><span class="line">  (* Math/PI radius radius))</span><br><span class="line"></span><br><span class="line">(defprotocol Shape</span><br><span class="line">  (area [this])</span><br><span class="line">  (perimeter [this]))</span><br><span class="line">(defrecord Rectangle [width length]</span><br><span class="line">  Shape</span><br><span class="line">  (area [this] (* (:width this) (:length this)))</span><br><span class="line">  (perimeter [this] (+ (* 2 (:width this)) (* 2 (:length this))))</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(defrecord Squre [side]</span><br><span class="line">  Shape</span><br><span class="line">  (area [this] (* (:side this) (:side this)))</span><br><span class="line">  (perimeter [this] (* 4 (:side this))))</span><br><span class="line"></span><br><span class="line">(def sql (-&gt;Squre 4))</span><br></pre></td></tr></table></figure>
+<h3 id="reify"><a href="#reify" class="headerlink" title="reify"></a>reify</h3><p>如果希望再不必自定义类型或记录的情况下实现某个协议。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(def some-type</span><br><span class="line">  (reify Shape</span><br><span class="line">    (area [this] &quot;I calculate area&quot;)</span><br><span class="line">    (perimeter [this] &quot;I calculate perimeter&quot;)))</span><br></pre></td></tr></table></figure>
+<h3 id="deftype"><a href="#deftype" class="headerlink" title="deftype"></a>deftype</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">(defprotocol INode</span><br><span class="line">  (entry [_])</span><br><span class="line">  (left [_])</span><br><span class="line">  (right [_])</span><br><span class="line">  (contains-value? [_ _])</span><br><span class="line">  (insert-value [_ _]))</span><br><span class="line"></span><br><span class="line">(deftype Node [value left-branch right-branch]</span><br><span class="line">  INode</span><br><span class="line">  (entry [_] value)</span><br><span class="line">  (left [_] left-branch)</span><br><span class="line">  (right [_] right-branch)</span><br><span class="line">  (contains-value? [tree v]</span><br><span class="line">    (cond</span><br><span class="line">      (= v value) true</span><br><span class="line">      (&lt; v value) (contains-value? left-branch v)</span><br><span class="line">      (&gt; v value) (contains-value? right-branch v)))</span><br><span class="line">  (insert-value [tree v]</span><br><span class="line">    (cond</span><br><span class="line">      (= v value) tree</span><br><span class="line">      (&lt; v value) (Node. value (insert-value left-branch v) right-branch)</span><br><span class="line">      (&gt; v value) (Node. value left-branch (insert-value right-branch v)))</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">(extend-protocol INode</span><br><span class="line">  nil</span><br><span class="line">  (entry [_] nil)</span><br><span class="line">  (left [_] nil)</span><br><span class="line">  (right [_] nil)</span><br><span class="line">  (contains-value? [_ _] false)</span><br><span class="line">  (insert-value [_ value] (Node. value nil nil)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/clojure/" rel="tag"># clojure</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/08/d2018-06-08/" rel="prev" title="emacs skeleton">
+                  <i class="fa fa-angle-left"></i> emacs skeleton
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/09/01/clone_arch/" rel="next" title="archlinux快速安装脚本">
+                  archlinux快速安装脚本 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

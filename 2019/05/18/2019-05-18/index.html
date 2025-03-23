@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="最早在archlinux上使用emacs，然而日常工作环境要求用win，所以针对win平台做了很多配置优化和功能增强，简单的记录当前我日常的使用情况。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win平台使用emacs">
+<meta property="og:url" content="http://example.com/2019/05/18/2019-05-18/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="最早在archlinux上使用emacs，然而日常工作环境要求用win，所以针对win平台做了很多配置优化和功能增强，简单的记录当前我日常的使用情况。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-18T03:12:56.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.833Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="emacs">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/05/18/2019-05-18/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/05/18/2019-05-18/","path":"2019/05/18/2019-05-18/","title":"win平台使用emacs"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>win平台使用emacs | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E9%83%BD%E7%94%A8emacs%E5%9C%A8win%E4%B8%8A%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">我都用emacs在win上干什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%BA%94%E7%94%A8%EF%BC%8C%E6%88%96%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6%EF%BC%8C%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%E7%AD%89"><span class="nav-number">1.1.</span> <span class="nav-text">打开应用，或快速查找文件，打开文件夹等</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E4%B8%80%E7%82%B9%E5%B0%8F%E8%84%9A%E6%9C%AC%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">写一点小脚本工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#org-mode-%E5%81%9Agtd"><span class="nav-number">1.3.</span> <span class="nav-text">org-mode 做gtd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%B8%80%E4%BA%9B%E5%B0%8F%E8%BE%85%E5%8A%A9%E5%8A%9F%E8%83%BD"><span class="nav-number">1.4.</span> <span class="nav-text">其他一些小辅助功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.5.</span> <span class="nav-text">写博客</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/18/2019-05-18/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="win平台使用emacs | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          win平台使用emacs
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-18 11:12:56" itemprop="dateCreated datePublished" datetime="2019-05-18T11:12:56+08:00">2019-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- ![image]() -->
+<center> 最早在archlinux上使用emacs，然而日常工作环境要求用win，所以针对win平台做了很多配置优化和功能增强，简单的记录当前我日常的使用情况。 </center>
+<span id="more"></span>
+
+<h1 id="我都用emacs在win上干什么"><a href="#我都用emacs在win上干什么" class="headerlink" title="我都用emacs在win上干什么"></a>我都用emacs在win上干什么</h1><h2 id="打开应用，或快速查找文件，打开文件夹等"><a href="#打开应用，或快速查找文件，打开文件夹等" class="headerlink" title="打开应用，或快速查找文件，打开文件夹等"></a>打开应用，或快速查找文件，打开文件夹等</h2><p>利用 w32 api 可以直接调用系统的相关功能块，完成一些自己需要的功能，比如当我需要在当前应用前端打开某个应用时不需要先win+d显示桌面,再找图标双击.<br>    git-bash 是我用的最多的程序，打开方式是 emacs-&gt; f2+o -&gt; bash,相较于在文件夹中右键 git-bash here 快了很多倍</p>
+<h2 id="写一点小脚本工具"><a href="#写一点小脚本工具" class="headerlink" title="写一点小脚本工具"></a>写一点<a target="_blank" rel="noopener" href="https://github.com/stanhe/tools">小脚本工具</a></h2><p>当我经常要用到某种功能的时候就自己写个小脚本保存起来，txt,notepad++也能写，不过emacs中我集成了 fast-run，写完就可以马上运行验证，不用开一个独立的bash. 最关键的是我自己拓展了emacs的 eshell，可以让我的emacs像 intellij ide一样有bottom terminal风格，也可以快速执行。(eshell 在win上表现很无力，所以我一般还是使用单独的 git-bash)</p>
+<h2 id="org-mode-做gtd"><a href="#org-mode-做gtd" class="headerlink" title="org-mode 做gtd"></a>org-mode 做gtd</h2><p>这个没什么好说的，大部分使用emacs人都在用的功能. </p>
+<h2 id="其他一些小辅助功能"><a href="#其他一些小辅助功能" class="headerlink" title="其他一些小辅助功能"></a>其他一些小辅助功能</h2><p>calc 进制转换，绑定了emacs里面 f2-f4关机,spc+f 快速查找桌面文件 alt+0+d 删除文件,使用python调用平台提醒功能定时提醒,这些都是一些偶尔想到的拓展,探索中总会发现新的惊喜。</p>
+<h2 id="写博客"><a href="#写博客" class="headerlink" title="写博客"></a>写博客</h2><p>当前博客就是使用emacs完成，然后push到github并自动发布的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/emacs/" rel="tag"># emacs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/05/09/d0509/" rel="prev" title="git submodule">
+                  <i class="fa fa-angle-left"></i> git submodule
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/12/12/2019-12-12/" rel="next" title="半年大事件">
+                  半年大事件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

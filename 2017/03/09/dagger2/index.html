@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="dagger2哪里都是一搜4个注解，分分钟放进工程里面使用，然而能用并不是使用第三方框架的初衷，毕竟继承框架都要有其优越性对我们的工程大有裨益才会去使用，这特喵到底有啥用，怎么用，我也很好奇啊，我也想知道啊，我看了User Guide，还是懵的呀~  所以我决定翻译一下，不对的地方请指正，反正我也会无视的。let’s go …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger2_译(1)">
+<meta property="og:url" content="http://example.com/2017/03/09/dagger2/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="dagger2哪里都是一搜4个注解，分分钟放进工程里面使用，然而能用并不是使用第三方框架的初衷，毕竟继承框架都要有其优越性对我们的工程大有裨益才会去使用，这特喵到底有啥用，怎么用，我也很好奇啊，我也想知道啊，我看了User Guide，还是懵的呀~  所以我决定翻译一下，不对的地方请指正，反正我也会无视的。let’s go …">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png">
+<meta property="article:published_time" content="2017-03-09T14:33:59.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.947Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="dagger2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png">
+
+
+<link rel="canonical" href="http://example.com/2017/03/09/dagger2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2017/03/09/dagger2/","path":"2017/03/09/dagger2/","title":"Dagger2_译(1)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Dagger2_译(1) | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dagger"><span class="nav-number">1.</span> <span class="nav-text">Dagger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User%E2%80%99s-Guide"><span class="nav-number">2.</span> <span class="nav-text">User’s Guide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-Dagger-2-is-Different"><span class="nav-number">3.</span> <span class="nav-text">Why Dagger 2 is Different</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Dagger"><span class="nav-number">4.</span> <span class="nav-text">Using Dagger</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Declaring-Dependencies"><span class="nav-number">4.1.</span> <span class="nav-text">Declaring Dependencies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Satisfying-Dependencies"><span class="nav-number">4.2.</span> <span class="nav-text">Satisfying Dependencies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Building-the-Graph"><span class="nav-number">4.3.</span> <span class="nav-text">Building the Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Bindings-in-the-graph"><span class="nav-number">4.3.1.</span> <span class="nav-text">Bindings in the graph</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2017/03/09/dagger2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Dagger2_译(1) | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dagger2_译(1)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-09 22:33:59" itemprop="dateCreated datePublished" datetime="2017-03-09T22:33:59+08:00">2017-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="http://oanvj2lsv.bkt.clouddn.com/google/dagger.png" alt="Dagger2"><br> <center> dagger2哪里都是一搜4个注解，分分钟放进工程里面使用，然而能用并不是使用第三方框架的初衷，毕竟继承框架都要有其优越性对我们的工程大有裨益才会去使用，这特喵到底有啥用，怎么用，我也很好奇啊，我也想知道啊，我看了User Guide，还是懵的呀~<br>  所以我决定翻译一下，不对的地方请指正，反正我也会无视的。let’s go …</center></p>
+<span id="more"></span>
+<h3 id="Dagger"><a href="#Dagger" class="headerlink" title="Dagger"></a><a target="_blank" rel="noopener" href="https://google.github.io/dagger/users-guide.html">Dagger</a></h3><p>翻译于google的dagger2</p>
+<h3 id="User’s-Guide"><a href="#User’s-Guide" class="headerlink" title="User’s Guide"></a>User’s Guide</h3><p>根据这个user guide来看，一个优秀设计的类应该是专一、简洁、高效的，如果这个类设计得特别大，看起来功能齐全，然而使用的功能不那么多的话，就会显得臃肿。dagger 简介的模板实现了注入依赖设计模式，可以很好的替换掉这种工厂方法类去生成实例，将一个类的依赖分开，放到类的外部，让该类专注于它更应该做的事。</p>
+<p>简单的说就在一个类中需要依赖其他类的时候不用在类的内部去new实例，而是在外部去new，那有特喵什么差别，差别就是类不用自己做，让其他类去做。</p>
+<p>优点，测试方面优越性很好，你只需要更改外部module，不会涉及到具体类的内部模块。另一方面就在于外部module的复用性，和可构造，可以使用多个module去构造一个新的module，不用new everywhere。</p>
+<h3 id="Why-Dagger-2-is-Different"><a href="#Why-Dagger-2-is-Different" class="headerlink" title="Why Dagger 2 is Different"></a>Why Dagger 2 is Different</h3><blockquote>
+<p>既然注入依赖已经存在很多年了，为什么还要去改造轮子呢？</p>
+</blockquote>
+<p>dagger2通过编译时自动生成繁复的代码,跟手写的一样(原意是这个)，确保其注入的简洁。</p>
+<h3 id="Using-Dagger"><a href="#Using-Dagger" class="headerlink" title="Using Dagger"></a>Using Dagger</h3><p>下面通过<a target="_blank" rel="noopener" href="https://github.com/google/dagger/tree/master/examples/simple/src/main/java/coffee">咖啡例子</a>来介绍dagger2的使用。</p>
+<p>Attention：下面部分不使用主观视角，避免带入误导性思维。</p>
+<h4 id="Declaring-Dependencies"><a href="#Declaring-Dependencies" class="headerlink" title="Declaring Dependencies"></a>Declaring Dependencies</h4><p>Dagger 为你的应用构建实例并满足依赖，它使用<a target="_blank" rel="noopener" href="http://docs.oracle.com/javaee/7/api/javax/inject/Inject.html">javax.inject.Injext</a>注解来识别当前应用需要的关注的构造器和字段。</p>
+<p>使用<code>@Injext</code>去注解构造器，dagger就会使用这个构造器来生成该类的实例，当需要一个新的实例的时候，dagger就会通过这个被 <code>@Injext</code>注解的构造器和相关参数去生成相应实例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Thermosiphon implements Pump &#123;</span><br><span class="line">  private final Heater heater;</span><br><span class="line"></span><br><span class="line">  @Inject</span><br><span class="line">  Thermosiphon(Heater heater) &#123;</span><br><span class="line">    this.heater = heater;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>dagger 也可以直接注入字段。 下面的例子中 通过注解取得两个相应的字段。Heater的实例 heater字段，和Pump的实例 pump字段。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class CoffeeMaker &#123;</span><br><span class="line">  @Inject Heater heater;</span><br><span class="line">  @Inject Pump pump;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你的类有@Inject注解的字段，却没有 @Inject注解对应的构造器，dagger 会注入这些字段，但是不会生成字段对应的新实例。所以可以添加一个@Injext注解的无参构造器，保证dagger可以创建实例。</p>
+<p>虽然构造函数或字段注入通常是首选，实际上dagger也支持方法注入。</p>
+<p>缺少@Inject的注解类不能被dagger注入依赖。</p>
+<h4 id="Satisfying-Dependencies"><a href="#Satisfying-Dependencies" class="headerlink" title="Satisfying Dependencies"></a>Satisfying Dependencies</h4><p>通常情况下 dagger会根据实例类型去创建新实例，以满足类需求的依赖，当你请求一个新实例CoffeeMaker的时候，它会调用 new CoffeeMaker() 并注入到需求的域。</p>
+<p>@Inject不会在以下情况工作：</p>
+<ul>
+<li>不能构建接口。</li>
+<li>第三方类不能被注解。</li>
+<li>可配置的对象必须配置（Configurable objects must be configured 这特喵是啥）。</li>
+</ul>
+<p>由于以上的不足，需要引入@Provides注解方法来满足依赖，根据该方法的返回类型来确定满足的依赖。</p>
+<p>举个栗子，当需要Heater实例的时候需要请求provideHeater()方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Provides</span><br><span class="line">static Heater provideHeater()&#123;</span><br><span class="line">    return new ElectricHeater();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Provides 方法也可以依赖自身，下面需求Pump实例的时候可以返回Thermosiphon实例(这不就是向上转型么)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Provides static Pump providePump(Thermosiphon pump) &#123;</span><br><span class="line">  return pump;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>所有@Provides 方法都必须属于一个module，module是添加了@Module注解的类。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Module</span><br><span class="line">class DripCoffeeModule &#123;</span><br><span class="line">  @Provides static Heater provideHeater() &#123;</span><br><span class="line">    return new ElectricHeater();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Provides static Pump providePump(Thermosiphon pump) &#123;</span><br><span class="line">    return pump;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了方便，@Provides 方法都加上provide前缀 module类都加上 Module后缀</p>
+<h4 id="Building-the-Graph"><a href="#Building-the-Graph" class="headerlink" title="Building the Graph"></a>Building the Graph</h4><p>The @Inject and @Provides-annotated classes form a graph of objects, linked by their dependencies. Calling code like an application’s main method or an Android Application accesses that graph via a well-defined set of roots.<br>将@Inject 和@Provides注解的类通过依赖关系组建成有向图对象，将他们的相应关系串起来，方便在应用的主方法，或者Android应用的application中调用。</p>
+<p> 在Dagger2中，则是通过在一个接口中定义一个无参但有返回类型的方法来实现。使用@Component注解一个接口，然后把module类型传递给它，然后dagger2会自动生成相关联的实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component(modules = DripCoffeeModule.class)</span><br><span class="line">interface CoffeeShop &#123;</span><br><span class="line">  CoffeeMaker maker();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自动生成的实现类会一Dagger作为前缀，请求它的 builder()方法已获取相关实例，使用返回的builder实例设置依赖并调用build()创建实例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CoffeeShop coffeeShop = DaggerCoffeeShop.builder()</span><br><span class="line">    .dripCoffeeModule(new DripCoffeeModule())</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Note：如果你的 @Component 注解不是顶层注解，而是内部类，那么生成的dagger桥样式略有不同。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Foo &#123;</span><br><span class="line">  static class Bar &#123;</span><br><span class="line">    @Component</span><br><span class="line">    interface BazComponent &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">生成类： DaggerFoo_Bar_BazComponent.</span><br></pre></td></tr></table></figure>
+<p>module 可以省略默认的构造器，builder可以自行构建该类的默认构造器，对于module中所有 注解@Provides都是静态方法的更不需要module实例，如果所有依赖都可以不用创建依赖实例而构造，那么生成的实现类一样有create() 方法 可以用来创建新实例而不再需要使用builder。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CoffeeShop coffeeShop = DaggerCoffeeShop.create();</span><br></pre></td></tr></table></figure>
+<p>现在，我们的CoffeeApp可以简单的使用dagger生成的CoffeeShop实现来获取一个完全注入的cofferMaker.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class CoffeeApp &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    CoffeeShop coffeeShop = DaggerCoffeeShop.create();</span><br><span class="line">    coffeeShop.maker().brew();//这特喵.brew()哪儿来的呀，扎铁了！老心，反正我在上面没找到。我猜。。。。猜你妹。。</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在 这个有向图就构造好了，进入点就是已经被注入。</p>
+<p>上面就是基本用法了，虽然这个user guide跳跃性很大，我脑补一下也就差不多了。</p>
+<h5 id="Bindings-in-the-graph"><a href="#Bindings-in-the-graph" class="headerlink" title="Bindings in the graph"></a>Bindings in the graph</h5><p>上面的栗子展示了怎样使用绑定来构建组件，但是绑定到有向图的机制有很多种。下面的方法均可用于生成可用依赖构成组件。</p>
+<ul>
+<li>在@Module中被@Provides注解的方法可以直接被@Component.modules或者通过@Module.includes引用。</li>
+<li>任何格式的@Inject注解的无作用域构造器 或者被@Scope注解并匹配多个组件其中一个组件的作用域。</li>
+<li>该组件依赖的组件提供的方法</li>
+<li>组件本身</li>
+<li>任何包含子组件的不合格的builders</li>
+<li>提供或者包含任何以上绑定的</li>
+<li>提供弱引用依赖的绑定</li>
+<li>任何格式的注入者</li>
+</ul>
+<p>（这特喵都是啥呀，啊！西坝~难道是我水准问题，那不能，肯定是眼花了，明天再改，续接<br>Singletons and Scoped Bindings<br>）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/dagger2/" rel="tag"># dagger2</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/02/21/alertDialog/" rel="prev" title="AlertDialog 相关问题汇总">
+                  <i class="fa fa-angle-left"></i> AlertDialog 相关问题汇总
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/11/annotation/" rel="next" title="Annotation">
+                  Annotation <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

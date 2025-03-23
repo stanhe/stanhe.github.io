@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="本文介绍如何构建 Model Context Protocol (MCP) 服务，一个用于统一管理和调用 AI 模型的标准化解决方案。从技术选型到最佳实践，为开发者提供完整的 MCP 服务实现指南。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建 AI 通用服务：实现自己的 Model Context Protocol (MCP) 服务">
+<meta property="og:url" content="http://example.com/2025/03/23/%E5%A6%82%E4%BD%95%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84mcp%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="本文介绍如何构建 Model Context Protocol (MCP) 服务，一个用于统一管理和调用 AI 模型的标准化解决方案。从技术选型到最佳实践，为开发者提供完整的 MCP 服务实现指南。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-23T13:45:40.000Z">
+<meta property="article:modified_time" content="2025-03-23T14:45:16.395Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="MCP">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="FastAPI">
+<meta property="article:tag" content="微服务">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/03/23/%E5%A6%82%E4%BD%95%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84mcp%E6%9C%8D%E5%8A%A1/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/03/23/%E5%A6%82%E4%BD%95%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84mcp%E6%9C%8D%E5%8A%A1/","path":"2025/03/23/如何写自己的mcp服务/","title":"构建 AI 通用服务：实现自己的 Model Context Protocol (MCP) 服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>构建 AI 通用服务：实现自己的 Model Context Protocol (MCP) 服务 | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-MCP-%E6%9C%8D%E5%8A%A1%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么是 MCP 服务？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88%E9%80%89%E6%8B%A9"><span class="nav-number">3.</span> <span class="nav-text">技术栈选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">核心功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-MCP-%E6%9C%8D%E5%8A%A1%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.1.</span> <span class="nav-text">1. MCP 服务初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0%E6%B3%A8%E5%86%8C"><span class="nav-number">4.2.</span> <span class="nav-text">2. 工具函数注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">4.3.</span> <span class="nav-text">3. 传输协议配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%8F%82%E6%95%B0%E9%AA%8C%E8%AF%81%E5%92%8C%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">4.4.</span> <span class="nav-text">4. 参数验证和错误处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">实际应用案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%92%8C%E7%9B%91%E6%8E%A7"><span class="nav-number">7.</span> <span class="nav-text">部署和监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90"><span class="nav-number">9.</span> <span class="nav-text">参考资源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/23/%E5%A6%82%E4%BD%95%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84mcp%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="构建 AI 通用服务：实现自己的 Model Context Protocol (MCP) 服务 | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          构建 AI 通用服务：实现自己的 Model Context Protocol (MCP) 服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-23 21:45:40 / 修改时间：22:45:16" itemprop="dateCreated datePublished" datetime="2025-03-23T21:45:40+08:00">2025-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- ![MCP服务架构图](mcp-architecture.png) -->
+<center>
+本文介绍如何构建 Model Context Protocol (MCP) 服务，一个用于统一管理和调用 AI 模型的标准化解决方案。从技术选型到最佳实践，为开发者提供完整的 MCP 服务实现指南。
+</center>
+<span id="more"></span>
+
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>随着 AI 技术的快速发展，如何高效地管理和调用各种 AI 模型成为了一个重要议题。Model Context Protocol (MCP) 服务提供了一个标准化的解决方案，它允许我们以统一的方式与不同的 AI 模型进行交互。在这篇文章中，我将结合实际项目经验，分享如何构建一个专业的 MCP 服务。</p>
+<h2 id="什么是-MCP-服务？"><a href="#什么是-MCP-服务？" class="headerlink" title="什么是 MCP 服务？"></a>什么是 MCP 服务？</h2><p>MCP（Model Context Protocol）是一个专门为 AI 模型交互设计的协议服务，它具有以下特点：</p>
+<ol>
+<li>标准化的模型调用接口</li>
+<li>灵活的传输协议支持（stdio、SSE）</li>
+<li>异步通信能力</li>
+<li>强大的工具函数扩展机制</li>
+</ol>
+<h2 id="技术栈选择"><a href="#技术栈选择" class="headerlink" title="技术栈选择"></a>技术栈选择</h2><ul>
+<li>核心框架：FastMCP</li>
+<li>开发语言：Python 3.x</li>
+<li>通信协议：stdio&#x2F;SSE (Server-Sent Events)</li>
+<li>异步支持：asyncio</li>
+<li>部署方式：直接运行&#x2F;容器化</li>
+</ul>
+<h2 id="核心功能实现"><a href="#核心功能实现" class="headerlink" title="核心功能实现"></a>核心功能实现</h2><h3 id="1-MCP-服务初始化"><a href="#1-MCP-服务初始化" class="headerlink" title="1. MCP 服务初始化"></a>1. MCP 服务初始化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mcp.server.fastmcp <span class="keyword">import</span> FastMCP</span><br><span class="line"><span class="keyword">from</span> mcp.server <span class="keyword">import</span> Server</span><br><span class="line"><span class="keyword">from</span> mcp.server.sse <span class="keyword">import</span> SseServerTransport</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 MCP 服务</span></span><br><span class="line">mcp = FastMCP(<span class="string">&quot;your_ai_service&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-工具函数注册"><a href="#2-工具函数注册" class="headerlink" title="2. 工具函数注册"></a>2. 工具函数注册</h3><p>MCP 服务的核心是通过装饰器注册工具函数，每个工具函数代表一个 AI 模型的能力：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@mcp.tool()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">process_ai_request</span>(<span class="params">input_text: <span class="built_in">str</span>, user_context: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;处理 AI 请求的工具函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 解析输入参数</span></span><br><span class="line">        result = <span class="keyword">await</span> handle_ai_request(input_text, user_context)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;错误：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-传输协议配置"><a href="#3-传输协议配置" class="headerlink" title="3. 传输协议配置"></a>3. 传输协议配置</h3><p>MCP 服务支持多种传输协议，可以根据使用场景灵活选择：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># stdio 模式 - 适合命令行工具集成</span></span><br><span class="line"><span class="keyword">if</span> stdio_mode:</span><br><span class="line">    mcp.run(transport=<span class="string">&#x27;stdio&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># SSE 模式 - 适合 Web 应用集成</span></span><br><span class="line">    <span class="keyword">from</span> starlette.applications <span class="keyword">import</span> Starlette</span><br><span class="line">    <span class="keyword">from</span> starlette.routing <span class="keyword">import</span> Mount, Route</span><br><span class="line">    </span><br><span class="line">    sse = SseServerTransport(<span class="string">&quot;/messages/&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">handle_sse</span>(<span class="params">request</span>):</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> sse.connect_sse(</span><br><span class="line">            request.scope,</span><br><span class="line">            request.receive,</span><br><span class="line">            request._send</span><br><span class="line">        ) <span class="keyword">as</span> (read_stream, write_stream):</span><br><span class="line">            <span class="keyword">await</span> mcp_server.run(</span><br><span class="line">                read_stream,</span><br><span class="line">                write_stream,</span><br><span class="line">                mcp_server.create_initialization_options()</span><br><span class="line">            )</span><br><span class="line">    </span><br><span class="line">    app = Starlette(</span><br><span class="line">        routes=[</span><br><span class="line">            Route(<span class="string">&quot;/sse&quot;</span>, endpoint=handle_sse),</span><br><span class="line">            Mount(<span class="string">&quot;/messages/&quot;</span>, app=sse.handle_post_message),</span><br><span class="line">        ]</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-参数验证和错误处理"><a href="#4-参数验证和错误处理" class="headerlink" title="4. 参数验证和错误处理"></a>4. 参数验证和错误处理</h3><p>为了确保服务的稳定性，需要实现完善的参数验证和错误处理机制：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AIRequestModel</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;AI 请求参数模型&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, **kwargs</span>):</span><br><span class="line">        <span class="variable language_">self</span>.params = kwargs</span><br><span class="line">        <span class="variable language_">self</span>.validate()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;验证参数有效性&quot;&quot;&quot;</span></span><br><span class="line">        required_fields = [<span class="string">&#x27;input_text&#x27;</span>, <span class="string">&#x27;model_type&#x27;</span>, <span class="string">&#x27;user_context&#x27;</span>]</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">all</span>(field <span class="keyword">in</span> <span class="variable language_">self</span>.params <span class="keyword">for</span> field <span class="keyword">in</span> required_fields)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">handle_error</span>(<span class="params">error: Exception</span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;统一的错误处理&quot;&quot;&quot;</span></span><br><span class="line">    error_type = <span class="built_in">type</span>(error).__name__</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&#x27;ValueError&#x27;</span>: <span class="string">&#x27;参数错误&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;RuntimeError&#x27;</span>: <span class="string">&#x27;运行时错误&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;ConnectionError&#x27;</span>: <span class="string">&#x27;连接错误&#x27;</span></span><br><span class="line">    &#125;.get(error_type, <span class="string">&#x27;未知错误&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="实际应用案例"><a href="#实际应用案例" class="headerlink" title="实际应用案例"></a>实际应用案例</h2><p>以下是一个实际的 MCP 服务示例，用于处理 AI 模型的调用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@mcp.tool()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">invoke_ai_model</span>(<span class="params">model_type: <span class="built_in">str</span>, prompt: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;调用指定的 AI 模型&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 模型调用逻辑</span></span><br><span class="line">        response = <span class="keyword">await</span> ai_model_manager.invoke(</span><br><span class="line">            model_type=model_type,</span><br><span class="line">            prompt=prompt</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;模型调用错误：<span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@mcp.tool()</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_model_status</span>(<span class="params">model_type: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取模型状态&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> ai_model_manager.get_status(model_type)</span><br></pre></td></tr></table></figure>
+
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><p>异步处理</p>
+<ul>
+<li>使用 async&#x2F;await 处理并发请求</li>
+<li>实现请求队列管理</li>
+<li>添加超时机制</li>
+</ul>
+</li>
+<li><p>错误处理</p>
+<ul>
+<li>实现统一的错误处理机制</li>
+<li>详细的错误日志记录</li>
+<li>优雅的错误恢复策略</li>
+</ul>
+</li>
+<li><p>性能优化</p>
+<ul>
+<li>模型缓存</li>
+<li>请求批处理</li>
+<li>资源限制控制</li>
+</ul>
+</li>
+<li><p>安全性</p>
+<ul>
+<li>输入验证和清理</li>
+<li>访问控制</li>
+<li>资源使用限制</li>
+</ul>
+</li>
+</ol>
+<h2 id="部署和监控"><a href="#部署和监控" class="headerlink" title="部署和监控"></a>部署和监控</h2><ol>
+<li><p>本地开发环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python -m mcp_service  <span class="comment"># stdio 模式</span></span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">uvicorn mcp_service:app --host 0.0.0.0 --port 8080  <span class="comment"># SSE 模式</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生产环境部署：</p>
+<ul>
+<li>容器化部署</li>
+<li>负载均衡</li>
+<li>监控和告警</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>MCP 服务为 AI 模型的调用提供了一个标准化的解决方案。通过实现 Model Context Protocol，我们可以：</p>
+<ol>
+<li>统一管理多个 AI 模型</li>
+<li>提供标准化的调用接口</li>
+<li>实现灵活的扩展机制</li>
+<li>确保服务的可靠性和可维护性</li>
+</ol>
+<p>通过本文的实践指南，你应该能够构建出一个专业的 MCP 服务，为你的 AI 应用提供可靠的模型调用支持。</p>
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://fastmcp.readthedocs.io/">FastMCP 文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.starlette.io/">Starlette 文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/asyncio.html">Python asyncio</a></li>
+</ul>
+<hr>
+<blockquote>
+<p>本文由作者梳理思路，并由 Cursor AI 辅助生成。如有任何问题或建议，欢迎与作者交流。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI/" rel="tag"># AI</a>
+              <a href="/tags/MCP/" rel="tag"># MCP</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag"># 微服务</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/02/cursor%E6%8F%90%E6%95%88/" rel="prev" title="使用Cursor提效">
+                  <i class="fa fa-angle-left"></i> 使用Cursor提效
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

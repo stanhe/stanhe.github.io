@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="shell重度用户的一些分享">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Custom shell script">
+<meta property="og:url" content="http://example.com/2022/03/01/custom-shell/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="shell重度用户的一些分享">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-01T13:35:38.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.946Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/03/01/custom-shell/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/01/custom-shell/","path":"2022/03/01/custom-shell/","title":"Custom shell script"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Custom shell script | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E8%AF%89%E6%8C%87%E4%BB%A4%E6%9D%A5%E7%94%B1"><span class="nav-number">2.</span> <span class="nav-text">简诉指令来由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E6%93%8D%E4%BD%9C%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">git操作集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gsb"><span class="nav-number">2.2.</span> <span class="nav-text">gsb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adb"><span class="nav-number">2.3.</span> <span class="nav-text">adb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C%E9%9B%86"><span class="nav-number">2.4.</span> <span class="nav-text">路径操作集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">完整配置</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/01/custom-shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Custom shell script | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Custom shell script
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-01 21:35:38" itemprop="dateCreated datePublished" datetime="2022-03-01T21:35:38+08:00">2022-03-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- ![image]() -->
+<center> shell重度用户的一些分享 </center>
+<span id="more"></span>
+
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>Terminal+zsh,安装zsh后.zshrc.pre-oh-my-zsh 用于迁移之前的shell配置,该文件也用于保存和自定义脚本。<br>实际使用中我更倾向于在当前机器上新建一个配置集合git仓库，写一个copy脚本，把散落在设备上各目录下的配置文件或自定义脚本收集起来统一管理，一段时间后copy并上传到git保存，久而久之就形成了自己最顺手的工具集</p>
+<h1 id="简诉指令来由"><a href="#简诉指令来由" class="headerlink" title="简诉指令来由"></a>简诉指令来由</h1><p>很多指令都是开发中需要用到的，总是在命令行敲就很麻烦，git相关的指令都进行了精简，一部分是参考了zsh的git插件alias，一部分则是自己定义的。<br>指令包括：git操作集，adb操作集，路径操作集</p>
+<h2 id="git操作集"><a href="#git操作集" class="headerlink" title="git操作集"></a>git操作集</h2><p>平时工作中用得最多的就是git相关指令，本人喜欢用shell操作git，一般只有在review的时候才会使用gui，所以基本开发中涉及到提交，切换，submodule处理等都是通过指令来完成。</p>
+<h2 id="gsb"><a href="#gsb" class="headerlink" title="gsb"></a>gsb</h2><p>配置文件中包含了下面这一串奇怪的gsb指令，在处理submodule的时候总是需要切换相关分支，但是每次都键入很长的指令，就算有history也要手输一长串，所以用下面的方法自定义后只需要gsb就能列出指令说明，不用去记</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#gsb 所有gsb开头的指令都是git submodule相关指令</span><br><span class="line">alias gsb=&#x27;cat ~/.zshrc.pre-oh-my-zsh|grep &#x27;&quot;&#x27;&quot;&#x27;^#gsb&#x27;&quot;&#x27;&quot;&#x27; &#x27;</span><br><span class="line">#gsb-dev: 切换kt-smart和相关module到dev分支，并update</span><br><span class="line">alias gsb-dev=&#x27;gck dev &amp;&amp; gsf gck dev &amp;&amp; gsu&#x27;</span><br><span class="line">#gsb-master: 切换kt-smart和相关module到master分支，并update</span><br><span class="line">alias gsb-master=&#x27;gck master &amp;&amp; gsf gck master &amp;&amp; gsu&#x27;</span><br><span class="line">#gsb-check: 检查当前所有模块所在分支</span><br><span class="line">alias gsb-check=&#x27;gsf gb&#x27;</span><br><span class="line">#gsb-checkout-dev: 检查当前所有模块的dev分支，自动从远端创建关联的本地dev分支</span><br><span class="line">alias gsb-checkout-dev=&#x27;gck -b dev origin/dev &amp;&amp; gsf  -b dev origin/dev&#x27;</span><br><span class="line">#gsb-pull: 对所有module执行pull指令，拉去并合并最新代码</span><br><span class="line">alias gsb-pull=&#x27;gf &amp;&amp; gsf gf&#x27;</span><br><span class="line">#gsb-status: 对所有module执行status指令</span><br><span class="line">alias gsb-status=&#x27;gst &amp;&amp; gsf gst&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="adb"><a href="#adb" class="headerlink" title="adb"></a>adb</h2><p>adb的相关alias没什么好说的，主要看一下function中的部分定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># use the devices with number</span><br><span class="line">adbd()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        STH_ADB_DEVICE=$(adb devices -l |grep device|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;if(NR&gt;1)&#123;print $4&quot; ===&gt; &quot;FNR-1&#125;&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        [[ -n $ANDROID_SERIAL ]] &amp;&amp; echo &quot;Used: ===&gt; $ANDROID_SERIAL&quot;</span><br><span class="line">        echo &quot;$STH_ADB_DEVICE&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        STH_ADB_TARGET=`expr $1 + 1`p</span><br><span class="line">        export ANDROID_SERIAL=$(adb devices|awk -F &quot;[[:space:]]&quot; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $1&#125;&#x27;&quot;&#x27;&quot;&#x27;|sed -n $STH_ADB_TARGET)</span><br><span class="line">        STH_ADB_DEVICE_MODEL=$(adb devices -l |awk -F &#x27;&quot;&#x27;&quot;&#x27;[[:space:]]+&#x27;&quot;&#x27;&quot;&#x27; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $5&#125;&#x27;&quot;&#x27;&quot;&#x27;|sed -n $STH_ADB_TARGET|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        echo &quot;Use device: $STH_ADB_DEVICE_MODEL serial: $ANDROID_SERIAL&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># adb shell kill pid with package name</span><br><span class="line">adbk()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        echo &quot;please input package name!&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        STH_ADB_KILL_PID=$(adb shell ps|grep $1|awk &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        $(adb shell kill $STH_ADB_KILL_PID)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>adbd 是对adb devices的解析，用于多设备的情况下在shell端设置要访问的Android设备<br>adbk 用于kill Android端应用，只需要匹配部分包名即可</p>
+<h2 id="路径操作集"><a href="#路径操作集" class="headerlink" title="路径操作集"></a>路径操作集</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># cd to path in child or in parent</span><br><span class="line">cds()&#123;</span><br><span class="line">    STH_CDS_FILES_FIND=0;</span><br><span class="line">    STH_CDS_FLINES=(`ls $PWD`)</span><br><span class="line">	for i ($STH_CDS_FLINES)&#123;</span><br><span class="line">		[[ $i == *$1* ]] &amp;&amp; STH_CDS_FILES_FIND=1 &amp;&amp; cd $i &amp;&amp; break</span><br><span class="line">	&#125;</span><br><span class="line">    if [[ $STH_CDS_FILES_FIND == 0 ]] &#123;</span><br><span class="line">        STH_CDS_FILES_FIND=0;</span><br><span class="line">        STH_CDS_FLINES=(`ls $(dirname $PWD)`)</span><br><span class="line">        for i ($STH_CDS_FLINES)&#123;</span><br><span class="line">            [[ $i == *$1* ]] &amp;&amp; cd &quot;$(dirname $PWD)/$i&quot; &amp;&amp; break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># my custom directorys</span><br><span class="line">mcd()&#123;</span><br><span class="line">    STH_FLINES=($&#123;(f)&quot;$(&lt;~/.mcd_path)&quot;&#125;)</span><br><span class="line">	echo -e &quot;\n===&gt; how to use? \n .1 to use dir 1 \n s. to open dir\n&quot;</span><br><span class="line">	for i ($STH_FLINES)&#123;</span><br><span class="line">		echo $i</span><br><span class="line">		sth_num=$i[(ws.:.)1]</span><br><span class="line">		sth_path=$i[(ws.:.)2]</span><br><span class="line">		[[ $sth_num[1] != &quot;#&quot; ]] &amp;&amp; alias &quot;.$sth_num&quot;=&quot;cd $sth_path&quot;</span><br><span class="line">	    &#125;</span><br><span class="line">	 echo -e &quot;\n&quot;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>cds 是对cd指令的拓展，我们使用中基本都是 ls，然后cd到路径，使用tab补全。这里就有一个问题，比如一个文件夹下面有很多按日期划分的文件夹，形如 2022-01-11 2022-01-12 2022-02-11，在tab补全时并不很智能，所以cds使用匹配在当前目录下查找要进入的文件夹，如果没找到再去上层目录查找，只要找到了就cd进去。好吧，其实这个功能我用的最多的情况是在多submodule之间快速切换。</p>
+<p>mcd 这个指令需要在根目录下定义一个 .mcd_path 文件，每一行使用 aa:bb的形式分割，比如1:&#x2F;usr&#x2F;home  那么mcd会先输出文件内容，然后映射.1到后面的目录，所以只需要输入 .1就可以切换到其对应的目录，这个指令用于配置需要经常访问的文件夹。</p>
+<h1 id="完整配置"><a href="#完整配置" class="headerlink" title="完整配置"></a>完整配置</h1><p>下面是我长期积累的部分配置，其中的指令基本都有使用，在有一些想法后微调</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br></pre></td><td class="code"><pre><span class="line">#Sth&#x27;s MACOS zsh config</span><br><span class="line">#Author: stanhe</span><br><span class="line">#echo &quot;$(date +&quot;%Y-%m-%d %T %N&quot;) Init .bashrc start! &quot;</span><br><span class="line">alias function=&#x27;func()&#123;</span><br><span class="line">#================= alias function start =====================</span><br><span class="line">gitcreatePreStatus()&#123;</span><br><span class="line">	sPath=$PWD/.git/hooks</span><br><span class="line">	if [[ -e &quot;$sPath&quot; &amp;&amp; ! -e &quot;$sPath/pre-status.sh&quot; ]]</span><br><span class="line">	then</span><br><span class="line">	    echo -e &quot;#!/bin/bash\necho &#x27;pre-status&#x27;&quot; &gt; $sPath/pre-status.sh;</span><br><span class="line">        chmod +x $sPath/pre-status.sh;</span><br><span class="line">	    echo &quot;Create pre-status in .git/hooks&quot;;</span><br><span class="line">	fi</span><br><span class="line">&#125;;</span><br><span class="line"># add git command pre-status</span><br><span class="line">git()&#123;</span><br><span class="line">       gPath=$PWD/.git/hooks/pre-status.sh</span><br><span class="line">       if [[ $# -ge 1 &amp;&amp; &quot;$1&quot; == &quot;pre&quot; &amp;&amp; -e &quot;$gPath&quot; ]]</span><br><span class="line">       then</span><br><span class="line">            command $gPath &quot;$@&quot;;</span><br><span class="line">       else</span><br><span class="line">            command git &quot;$@&quot;;</span><br><span class="line">       fi</span><br><span class="line">&#125;;</span><br><span class="line">my_test()&#123;</span><br><span class="line">	echo &quot;my test&quot;;</span><br><span class="line">&#125;;</span><br><span class="line">test1()&#123;</span><br><span class="line">	echo &quot;test1&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"># switch branch for current and submodules.</span><br><span class="line">checkoutSub()&#123;</span><br><span class="line">	echo &quot;switch $1 ...&quot;;</span><br><span class="line">	gck $1 &amp;&amp; gsf gck $1;</span><br><span class="line">	echo &quot;===end===&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"># checkout new branch for current and submodules.</span><br><span class="line">checkoutNewSub()&#123;</span><br><span class="line">	echo &quot;Create $1 ...&quot;;</span><br><span class="line">	gck -b $1 &amp;&amp; gsf gck -b $1;</span><br><span class="line">	echo &quot;===end===&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"># delete current and submodules branch.</span><br><span class="line">deleteBranch()&#123;</span><br><span class="line">	echo &quot;Delete $1 ...&quot;;</span><br><span class="line">	gb -d $1 &amp;&amp; gsf gb -d $1;</span><br><span class="line">	echo &quot;===end===&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"># checkout current and submodules to master</span><br><span class="line">checkoutMaster()&#123;</span><br><span class="line">	echo &quot;Checkout all modules to master...&quot;;</span><br><span class="line">	gckm &amp;&amp; gsf gckm;</span><br><span class="line">	echo &quot;===end===&quot;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"># cd to path in child or in parent</span><br><span class="line">cds()&#123;</span><br><span class="line">    STH_CDS_FILES_FIND=0;</span><br><span class="line">    STH_CDS_FLINES=(`ls $PWD`)</span><br><span class="line">	for i ($STH_CDS_FLINES)&#123;</span><br><span class="line">		[[ $i == *$1* ]] &amp;&amp; STH_CDS_FILES_FIND=1 &amp;&amp; cd $i &amp;&amp; break</span><br><span class="line">	&#125;</span><br><span class="line">    if [[ $STH_CDS_FILES_FIND == 0 ]] &#123;</span><br><span class="line">        STH_CDS_FILES_FIND=0;</span><br><span class="line">        STH_CDS_FLINES=(`ls $(dirname $PWD)`)</span><br><span class="line">        for i ($STH_CDS_FLINES)&#123;</span><br><span class="line">            [[ $i == *$1* ]] &amp;&amp; cd &quot;$(dirname $PWD)/$i&quot; &amp;&amp; break</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># my custom directorys</span><br><span class="line">mcd()&#123;</span><br><span class="line">    STH_FLINES=($&#123;(f)&quot;$(&lt;~/.mcd_path)&quot;&#125;)</span><br><span class="line">	echo -e &quot;\n===&gt; how to use? \n .1 to use dir 1 \n s. to open dir\n&quot;</span><br><span class="line">	for i ($STH_FLINES)&#123;</span><br><span class="line">		echo $i</span><br><span class="line">		sth_num=$i[(ws.:.)1]</span><br><span class="line">		sth_path=$i[(ws.:.)2]</span><br><span class="line">		[[ $sth_num[1] != &quot;#&quot; ]] &amp;&amp; alias &quot;.$sth_num&quot;=&quot;cd $sth_path&quot;</span><br><span class="line">	    &#125;</span><br><span class="line">	 echo -e &quot;\n&quot;</span><br><span class="line">&#125;;</span><br><span class="line"># gck -n</span><br><span class="line">gckn()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        echo &quot;   ===&gt; please input branch number !&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        TARGET_BRANCH=$1p</span><br><span class="line">        git checkout $(git branch | sed -n $TARGET_BRANCH)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># git check status by number</span><br><span class="line">gdn()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        STH_GIT_DIFF=$(git status|grep &#x27;&quot;&#x27;&quot;&#x27;modified: &#x27;&quot;&#x27;&quot;&#x27;|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&quot; ===&gt; &quot;FNR&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        echo &quot;$STH_GIT_DIFF&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        STH_GIT_TARGET=$1p</span><br><span class="line">        git diff $(echo &quot;$STH_GIT_DIFF&quot;|sed -n $STH_GIT_TARGET|awk -F&quot;===&gt;&quot; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $1&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># use the devices with number</span><br><span class="line">adbd()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        STH_ADB_DEVICE=$(adb devices -l |grep device|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;if(NR&gt;1)&#123;print $4&quot; ===&gt; &quot;FNR-1&#125;&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        [[ -n $ANDROID_SERIAL ]] &amp;&amp; echo &quot;Used: ===&gt; $ANDROID_SERIAL&quot;</span><br><span class="line">        echo &quot;$STH_ADB_DEVICE&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        STH_ADB_TARGET=`expr $1 + 1`p</span><br><span class="line">        export ANDROID_SERIAL=$(adb devices|awk -F &quot;[[:space:]]&quot; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $1&#125;&#x27;&quot;&#x27;&quot;&#x27;|sed -n $STH_ADB_TARGET)</span><br><span class="line">        STH_ADB_DEVICE_MODEL=$(adb devices -l |awk -F &#x27;&quot;&#x27;&quot;&#x27;[[:space:]]+&#x27;&quot;&#x27;&quot;&#x27; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $5&#125;&#x27;&quot;&#x27;&quot;&#x27;|sed -n $STH_ADB_TARGET|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        echo &quot;Use device: $STH_ADB_DEVICE_MODEL serial: $ANDROID_SERIAL&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># adb shell kill pid with package name</span><br><span class="line">adbk()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        echo &quot;please input package name!&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        STH_ADB_KILL_PID=$(adb shell ps|grep $1|awk &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">        $(adb shell kill $STH_ADB_KILL_PID)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># check network connection</span><br><span class="line">sth_netstat()&#123;</span><br><span class="line">    STH_NET_BACK_CODE=$(curl -I -s --connect-timeout 3 www.baidu.com|head -n 1|awk -F &quot;[[:space:]]&quot; &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&#125;&#x27;&quot;&#x27;&quot;&#x27;)</span><br><span class="line">    if [[ &quot;$STH_NET_BACK_CODE&quot; == 200 ]] &#123;</span><br><span class="line">        echo &quot;Can access network...&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;Access network Error!&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># ssh my pi</span><br><span class="line">sshpi()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        echo &quot;   ===&gt; please input the port number !&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        ssh -p $1 pi@1.tcp.cpolar.cn</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># open a file with file browser</span><br><span class="line">s.()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        open ./</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        open $1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"># create qrcode</span><br><span class="line">qr()&#123;</span><br><span class="line">    if [[ -z $1 ]] &#123;</span><br><span class="line">        echo &quot;   ===&gt; please input the qrcode string !&quot;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo $1 |curl -F-=\&lt;- qrenco.de</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">#================= alias function  end  =====================</span><br><span class="line">&#125;;func&#x27;</span><br><span class="line"></span><br><span class="line">#================= custom alias =====================</span><br><span class="line">#alias sth_alias_gdn_cmd1=&#x27;git status|grep &#x27;&quot;&#x27;&quot;&#x27;modified: &#x27;&quot;&#x27;&quot;&#x27;|awk -F: &#x27;&quot;&#x27;&quot;&#x27;&#123;print $2&quot; ====&gt; &quot;FNR&#125;&#x27;&quot;&#x27;&quot; simple for use &#x27; in cmds</span><br><span class="line">alias q=&#x27;exit&#x27;</span><br><span class="line">alias test=&#x27;my_test&#x27;</span><br><span class="line">alias t1=&#x27;test1&#x27;</span><br><span class="line">alias la=&#x27;ls -lsah&#x27;</span><br><span class="line">alias gaa=&#x27;git add . &amp;&amp; gst&#x27;</span><br><span class="line">alias gii=&#x27;git init&#x27;</span><br><span class="line">alias gst=&#x27;git status&#x27;</span><br><span class="line">alias gsh=&#x27;git stash&#x27;</span><br><span class="line">alias gd=&#x27;git diff&#x27;</span><br><span class="line">alias gb=&#x27;git branch&#x27;</span><br><span class="line">alias gbs=&#x27;gb &amp;&amp; gsf gb&#x27;</span><br><span class="line">alias gdc=&#x27;git diff --cached&#x27;</span><br><span class="line">alias gp=&#x27;git push&#x27;</span><br><span class="line">alias gpre=&#x27;git pre&#x27;</span><br><span class="line">alias gf=&#x27;git pull&#x27;</span><br><span class="line">alias gcmsg=&#x27;git commit -m&#x27;</span><br><span class="line">alias gcps=&#x27;gitCreatePreStatus&#x27;</span><br><span class="line">alias gl=&#x27;git lg&#x27;</span><br><span class="line">alias gck=&#x27;git checkout&#x27;</span><br><span class="line">alias gckm=&#x27;git checkout master&#x27;</span><br><span class="line">alias gcks=&#x27;checkoutSub&#x27;</span><br><span class="line">alias gckbs=&#x27;checkoutNewSub&#x27;</span><br><span class="line">alias gbds=&#x27;deleteBranch&#x27;</span><br><span class="line">alias gcksm=&#x27;checkoutMaster&#x27;</span><br><span class="line">#alias gcksm=&#x27;gckm &amp;&amp; gsf gckm&#x27;</span><br><span class="line">alias gsf=&#x27;git submodule foreach &#x27;</span><br><span class="line">alias gsu=&#x27;git submodule update &#x27;</span><br><span class="line">#gsb 所有gsb开头的指令都是git submodule相关指令</span><br><span class="line">alias gsb=&#x27;cat ~/.zshrc.pre-oh-my-zsh|grep &#x27;&quot;&#x27;&quot;&#x27;^#gsb&#x27;&quot;&#x27;&quot;&#x27; &#x27;</span><br><span class="line">#gsb-dev: 切换kt-smart和相关module到dev分支，并update</span><br><span class="line">alias gsb-dev=&#x27;gck dev &amp;&amp; gsf gck dev &amp;&amp; gsu&#x27;</span><br><span class="line">#gsb-master: 切换kt-smart和相关module到master分支，并update</span><br><span class="line">alias gsb-master=&#x27;gck master &amp;&amp; gsf gck master &amp;&amp; gsu&#x27;</span><br><span class="line">#gsb-check: 检查当前所有模块所在分支</span><br><span class="line">alias gsb-check=&#x27;gsf gb&#x27;</span><br><span class="line">#gsb-checkout-dev: 检查当前所有模块的dev分支，自动从远端创建关联的本地dev分支</span><br><span class="line">alias gsb-checkout-dev=&#x27;gck -b dev origin/dev &amp;&amp; gsf  -b dev origin/dev&#x27;</span><br><span class="line">#gsb-pull: 对所有module执行pull指令，拉去并合并最新代码</span><br><span class="line">alias gsb-pull=&#x27;gf &amp;&amp; gsf gf&#x27;</span><br><span class="line">#gsb-status: 对所有module执行status指令</span><br><span class="line">alias gsb-status=&#x27;gst &amp;&amp; gsf gst&#x27;</span><br><span class="line">alias gci=&#x27;git commit&#x27;</span><br><span class="line">alias grh=&#x27;git reset --hard &#x27;</span><br><span class="line">alias gr=&#x27;git restore &#x27;</span><br><span class="line">alias grs=&#x27;git restore --staged &#x27;</span><br><span class="line">alias ggrep=&#x27;git grep -n &#x27;</span><br><span class="line">alias adbi=&#x27;adb shell input text&#x27; # action input</span><br><span class="line">alias adbh=&#x27;adb shell input keyevent 3&#x27; # action home</span><br><span class="line">alias adbb=&#x27;adb shell input keyevent 4&#x27; # action back</span><br><span class="line">alias adbn=&#x27;adb shell input keyevent 61&#x27; # action next</span><br><span class="line">alias adbe=&#x27;adb shell input keyevent 66&#x27; # action enter</span><br><span class="line">alias adbdd=&#x27;adb shell input keyevent 67&#x27; # action delete</span><br><span class="line">alias adbwd=&#x27;adb shell svc wifi disable&#x27; # disable wifi</span><br><span class="line">alias adbwe=&#x27;adb shell svc wifi enable&#x27; # enable wifi</span><br><span class="line">alias adbfd=&#x27;adb shell settings put global airplane_mode_on 0&#x27; # close airplane mode</span><br><span class="line">alias adbfe=&#x27;adb shell settings put global airplane_mode_on 1&#x27; # open airplane mode</span><br><span class="line">alias adbne=&#x27;adbwe &amp;&amp; adbfd&#x27; # enable net</span><br><span class="line">alias adbnd=&#x27;adbwd &amp;&amp; adbfe&#x27; # disable net</span><br><span class="line">alias adbr=&#x27;adb reboot&#x27; # reboot machine</span><br><span class="line">alias adbl=&#x27;adb shell ls&#x27; # ls</span><br><span class="line">alias adbg=&#x27;adb shell ps | grep &#x27;</span><br><span class="line">alias adbbc=&#x27;adb shell am broadcast -a &#x27; # eg: adb shell am broadcast -a com.android.test --es test_string “this is test string” --ei test_int 100 --ez test_boolean true</span><br><span class="line">alias adbsa=&#x27;adb shell am start -n &#x27; # start activity pkg/.activity</span><br><span class="line">alias alg=&#x27;adb logcat | grep --color=auto &#x27; #adb logcat grep file</span><br><span class="line">alias adbsh=&#x27;scrcpy -b8M -m1920 --window-x 800 --window-y 100 --window-width 800 --window-height 450 &amp;&#x27;</span><br><span class="line">alias adbsv=&#x27;scrcpy -b8M -m1400 --window-x 800 --window-y 100 --window-width 450 --window-height 800 &amp;&#x27;</span><br><span class="line"></span><br><span class="line"># tmux session</span><br><span class="line">alias txsn=&#x27;tmux new -s &#x27;</span><br><span class="line">alias txsd=&#x27;tmux detach&#x27;</span><br><span class="line">alias txsl=&#x27;tmux ls&#x27;</span><br><span class="line">alias txsa=&#x27;tmux attach -t &#x27;</span><br><span class="line">alias txsk=&#x27;tmux kill-session -t &#x27;</span><br><span class="line">alias txss=&#x27;tmux switch -t &#x27;</span><br><span class="line"># tmux window</span><br><span class="line">alias txwi=&#x27;tmux split-window&#x27;</span><br><span class="line">alias txws=&#x27;tmux split-window -h&#x27;</span><br><span class="line">alias txpu=&#x27;tmux select-pane -U&#x27;</span><br><span class="line">alias txpd=&#x27;tmux select-pane -D&#x27;</span><br><span class="line">alias txpl=&#x27;tmux select-pane -L&#x27;</span><br><span class="line">alias txpr=&#x27;tmux select-pane -R&#x27;</span><br><span class="line">alias txps=&#x27;tmux swap-pane -d &#x27;</span><br><span class="line"></span><br><span class="line"># system</span><br><span class="line">#alias s.=&#x27;open ./&#x27;</span><br><span class="line">alias t.=&#x27;open ./ -a Terminal.app&#x27;</span><br><span class="line"></span><br><span class="line">function</span><br><span class="line"></span><br><span class="line">zmodload zsh/mapfile</span><br><span class="line"></span><br><span class="line">export PATH=&quot;$PATH:/Users/user/.tools&quot;</span><br><span class="line"></span><br><span class="line">#echo &quot;$(date +&quot;%Y-%m-%d %T %N&quot;) Init .bashrc end! &quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/07/stanhe/" rel="prev" title="About Me">
+                  <i class="fa fa-angle-left"></i> About Me
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/02/macos-right-cmd/" rel="next" title="Macos右键快速操作">
+                  Macos右键快速操作 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

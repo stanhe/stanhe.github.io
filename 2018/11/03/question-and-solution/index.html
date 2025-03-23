@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="1. 路径设置中的问题最近在写一个windows上使用的emacs terminal插件，让emacs act as vscode的terminal，遇到一个查找父路径的问题，比如一个java项目，项目路径即父路径应该是有 settings和graldew的目录，而source code放在 src&#x2F;main&#x2F;Main.java 这样子，那么当我编辑了该文件后要运行 gra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Question-and-solutions">
+<meta property="og:url" content="http://example.com/2018/11/03/question-and-solution/index.html">
+<meta property="og:site_name" content="朝乾夕惕,虚怀如谷">
+<meta property="og:description" content="1. 路径设置中的问题最近在写一个windows上使用的emacs terminal插件，让emacs act as vscode的terminal，遇到一个查找父路径的问题，比如一个java项目，项目路径即父路径应该是有 settings和graldew的目录，而source code放在 src&#x2F;main&#x2F;Main.java 这样子，那么当我编辑了该文件后要运行 gra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-11-03T04:22:06.000Z">
+<meta property="article:modified_time" content="2025-03-21T16:10:24.993Z">
+<meta property="article:author" content="Stanhe">
+<meta property="article:tag" content="emacs-lisp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2018/11/03/question-and-solution/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2018/11/03/question-and-solution/","path":"2018/11/03/question-and-solution/","title":"Question-and-solutions"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Question-and-solutions | 朝乾夕惕,虚怀如谷</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">朝乾夕惕,虚怀如谷</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">与喧嚣低调同行</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">1. 路径设置中的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">2. 使用关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%85%B3%E9%94%AE%E5%AD%97%E8%A7%A3%E6%9E%90%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3 关键字解析问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-keywords-to-plist"><span class="nav-number">4.</span> <span class="nav-text">4 keywords-to-plist</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Stanhe</p>
+  <div class="site-description" itemprop="description">灵魂躁动不安</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/03/question-and-solution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Stanhe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="灵魂躁动不安">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Question-and-solutions | 朝乾夕惕,虚怀如谷">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Question-and-solutions
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-03 12:22:06" itemprop="dateCreated datePublished" datetime="2018-11-03T12:22:06+08:00">2018-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-22 00:10:24" itemprop="dateModified" datetime="2025-03-22T00:10:24+08:00">2025-03-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- ![image]() -->
+
+<h3 id="1-路径设置中的问题"><a href="#1-路径设置中的问题" class="headerlink" title="1. 路径设置中的问题"></a>1. 路径设置中的问题</h3><p>最近在写一个windows上使用的emacs terminal插件，让emacs act as vscode的terminal，遇到一个查找父路径的问题，比如一个java项目，项目路径即父路径应该是有 settings和graldew的目录，而source code放在 src&#x2F;main&#x2F;Main.java 这样子，那么当我编辑了该文件后要运行 gradle run ，就应该在父路径下运行，所以我找到了下面的方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(defun get-parent-dir (name)</span><br><span class="line">  &quot;Get the parent name dir.&quot;</span><br><span class="line">  (locate-dominating-file default-directory name))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>理论上可以直接用这个，但是我希望自己指定父路径，这时，我需要一个方法能够返回list中第一个非nil，想到用or 但是不知道怎么把list 拆开传给or。找到了 cl-some 这个方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(defvar pop-find-parent-directory nil &quot;find the files in parent directory,if find,return the path as parent directory,else try the next&quot;)</span><br><span class="line"></span><br><span class="line">(defun get-project-root-directory (buffer)</span><br><span class="line">  &quot;find current project root,for git or gradle.&quot;</span><br><span class="line">    (with-current-buffer buffer</span><br><span class="line">      (if (setq parent (cl-some #&#x27;get-parent-dir pop-find-parent-directory))</span><br><span class="line">	  parent</span><br><span class="line">	(get-current-directory))))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>之后又详细的研究了macro 补一个 or的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(defmacro get-not-nil (list)</span><br><span class="line">  `(progn</span><br><span class="line">     (or ,@list)))</span><br><span class="line"></span><br><span class="line">(get-not-nil (nil nil &quot;he&quot; &quot;hi&quot;) )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="2-使用关键字"><a href="#2-使用关键字" class="headerlink" title="2. 使用关键字"></a>2. 使用关键字</h3><p>我希望我的方法能像use-package一样使用 :init :config来配置，所以我查询了function的keyword。发现方法或者宏后面加*的都是 cl.el 的实现,cl的实现里支持 &amp;key.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(defun* example (&amp;rest args &amp;key (a 1) (b 2) &amp;allow-other-keys)</span><br><span class="line">  (format &quot;%s %s %s&quot; args a b))</span><br><span class="line">(example   :b &quot;hello&quot; 2)</span><br><span class="line"></span><br><span class="line">(defun* my-example (name &amp;key (a ) &amp;allow-other-keys)</span><br><span class="line">  (format &quot;%s %s &quot; name a))</span><br><span class="line"></span><br><span class="line">(my-example &quot;gradle&quot; :b (message &quot;hello&quot;))</span><br></pre></td></tr></table></figure>
+<p>上面的方法确实可以传递keyword，但是并不能传递 (message “hello”),这种形式会被eval成 “hello”传递，所以又想到宏</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(defmacro* test-macro (name &amp;key (init) (config) &amp;allow-other-keys)</span><br><span class="line">  `(progn</span><br><span class="line">     (message &quot;name is :%s&quot; ,name)</span><br><span class="line">     (if (&gt; ,(length name) 5)</span><br><span class="line">	 ,init</span><br><span class="line">       ,config)))</span><br><span class="line"></span><br><span class="line">(macroexpand &#x27;(test-macro &quot;hi&quot; :init (message &quot;ok&quot;) :config (message &quot;config&quot;)))</span><br><span class="line">(test-macro &quot;hi1234&quot; :init (message &quot;ok&quot;) :config (message &quot;config&quot;))</span><br><span class="line">(test-macro &quot;ojbk&quot;)</span><br></pre></td></tr></table></figure>
+<p>如上就可以使用关键字来初始化了。<span id="question2"><font color="#0099ff">然而关键字后面有两个表达式的情况下不能解析,keyword 只认:init之后的第一个表达式.</font></span></p>
+<h3 id="3-关键字解析问题"><a href="#3-关键字解析问题" class="headerlink" title="3 关键字解析问题"></a>3 关键字解析问题</h3><p>通过宏将quote形式的参数传入，调用while时，内部不需要宏参数解析。参考了 defcustom宏的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(defmacro handle-params-macro (&amp;rest args)</span><br><span class="line">  `(let ((params &#x27;,args)</span><br><span class="line">	 current-arg</span><br><span class="line">	 (init (list &#x27;progn))</span><br><span class="line">	 (config (list &#x27;progn)))</span><br><span class="line">    (while params</span><br><span class="line">      (let ((value (pop params)))</span><br><span class="line">    	    (cond</span><br><span class="line">    	    ((symbolp value) (setq current-arg value))</span><br><span class="line">    	    ((eq current-arg :init) (setq init (append init (list value))))</span><br><span class="line">    	    ((eq current-arg :config) (setq config (append config (list value))))</span><br><span class="line">	    )))</span><br><span class="line">    (eval config)</span><br><span class="line">    config;init back value.</span><br><span class="line">    ))</span><br><span class="line"></span><br><span class="line">(setq x (handle-params-macro :init (message &quot;hi&quot;) (message &quot;hello&quot;) :config &quot;ok&quot; (message &quot;ok&quot;)))</span><br><span class="line">x</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面的方法解决了<a href="#question2"><font color="#ffa500">2中多form解析的问题</font></a>，但是参数固定了，只有:init :config，要添加就需要修改代码，为了方便，让该宏自动查找:init这种参数并返回一个plist</p>
+<h3 id="4-keywords-to-plist"><a href="#4-keywords-to-plist" class="headerlink" title="4 keywords-to-plist"></a>4 keywords-to-plist</h3><p>解决上面 #3 的 keyways 解析问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">(defmacro keywords-to-plist (&amp;rest args)</span><br><span class="line">  &quot;handle the input keywords to progn plist.&quot;</span><br><span class="line">  `(let ((params &#x27;,args)</span><br><span class="line">	 current-arg</span><br><span class="line">	 return-plist</span><br><span class="line">	 tmp-value-arg</span><br><span class="line">	 (init-arg (list &#x27;progn)))</span><br><span class="line">    (while params</span><br><span class="line">      (let ((value (pop params)))</span><br><span class="line">    	    (cond</span><br><span class="line">    	     ((and (symbolp value) (not (eq nil value)))</span><br><span class="line">	      (setq current-arg value)</span><br><span class="line">	      (setq tmp-value-arg init-arg))</span><br><span class="line">	    (t (setq tmp-value-arg (append tmp-value-arg (list value))))</span><br><span class="line">	    )</span><br><span class="line">	    (if (or (eq 0 (length params)) (and (symbolp (car params)) (not (eq nil (car params)))))</span><br><span class="line">		(setq return-plist (plist-put return-plist current-arg tmp-value-arg)))</span><br><span class="line">	    ))</span><br><span class="line">    return-plist</span><br><span class="line">    ))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(setq x (keywords-to-plist &quot;hello&quot; &quot;world&quot; :init (message &quot;hi&quot;) (message &quot;hello&quot;) :config &quot;ok&quot; (message &quot;ok&quot;) :some (message &quot;this is some&quot;) nil (message &quot;new some&quot;)))</span><br><span class="line"></span><br><span class="line">(eval (plist-get x :some))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>That’s all.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/emacs-lisp/" rel="tag"># emacs-lisp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/26/first-step-to-learn/" rel="prev" title="Fast learn a new programming language">
+                  <i class="fa fa-angle-left"></i> Fast learn a new programming language
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/03/%E8%8E%B2%E8%8A%B1%E5%B1%B1%E7%81%AF%E5%85%89show/" rel="next" title="light show">
+                  light show <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Stanhe</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
